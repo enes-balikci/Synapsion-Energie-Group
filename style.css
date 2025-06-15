@@ -86,38 +86,6 @@ a:hover, .nav-link.active {
   background: var(--color-footer);
   color: var(--color-secondary);
 }
-/* Dropdown */
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 100%;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(24,65,122,0.08);
-  min-width: 200px;
-  z-index: 20;
-  margin-top: 3px;
-}
-.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu {
-  display: block;
-}
-.dropdown-menu li {
-  padding: 0;
-  margin: 0;
-}
-.dropdown-menu a {
-  display: block;
-  padding: 11px 16px;
-  color: var(--color-primary);
-  border-radius: 3px;
-  font-size: 1em;
-}
-.dropdown-menu a:hover {
-  background: var(--color-footer);
-  color: var(--color-secondary);
-}
 
 /* Main */
 .site-main {
@@ -214,43 +182,6 @@ a:hover, .nav-link.active {
   font-weight: 600;
 }
 
-/* Contact Form */
-.contact-form-container {
-  display: flex;
-  justify-content: center;
-}
-.contact-form {
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  background: var(--color-footer);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 24px 20px;
-  box-shadow: 0 1px 8px rgba(24,65,122,0.04);
-}
-.contact-form label {
-  font-weight: 500;
-  color: var(--color-primary);
-}
-.contact-form input,
-.contact-form textarea {
-  border: 1px solid var(--color-border);
-  border-radius: 5px;
-  padding: 8px;
-  font-size: 1em;
-  font-family: inherit;
-  resize: vertical;
-}
-.contact-form input:focus,
-.contact-form textarea:focus {
-  outline: none;
-  border-color: var(--color-secondary);
-  background: #f0f6ff;
-}
-
 /* Footer */
 .site-footer {
   background: var(--color-footer);
@@ -290,7 +221,6 @@ a:hover, .nav-link.active {
   .header-flex { flex-direction: column; gap: 10px; }
   .main-title { font-size: 1.45em; }
   .subtitle { font-size: 1.05em; }
-  .contact-form { padding: 12px 6px; }
 }
 @media (max-width: 430px) {
   html, body { font-size: 15px; }
