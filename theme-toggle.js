@@ -6,8 +6,8 @@
     var btn = document.getElementById('theme-toggle-btn');
     if (btn) {
       btn.innerHTML = theme === 'dark'
-        ? '<i class="fas fa-moon"></i> Karanlık Mod'
-        : '<i class="fas fa-sun"></i> Aydınlık Mod';
+        ? '<i class="fas fa-moon"></i> Dark Mod'
+        : '<i class="fas fa-sun"></i> Light Mod';
     }
   }
 
