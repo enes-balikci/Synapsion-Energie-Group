@@ -4,29 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Synapsion Energie Group</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- AOS for professional scroll animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
+  <header data-aos="fade-down">
     <div style="display: flex; align-items: center;">
       <a href="index.html">
         <img src="lion-logo.png" alt="Logo" class="site-logo" />
       </a>
-      <h1>Synapsion Energie Group</h1>
+      <h1 data-aos="zoom-in"><i class="fas fa-bolt"></i> Synapsion Energie Group</h1>
     </div>
     <nav>
-      <a href="index.html">Accueil</a>
-      <a href="apropos.html">À propos</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-aos="fade-right"><i class="fas fa-home"></i> Accueil</a>
+      <a href="apropos.html" data-aos="fade-down"><i class="fas fa-users"></i> À propos</a>
+      <a href="services.html" data-aos="fade-up"><i class="fas fa-cogs"></i> Services</a>
+      <a href="contact.html" data-aos="fade-left"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
   </header>
-
   <main>
-    <!-- İçerik -->
+    <section data-aos="zoom-in">
+      <h2><i class="fas fa-lightbulb"></i> Des solutions innovantes pour l'énergie</h2>
+      <p>
+        Synapsion Energie Group est une entreprise leader qui propose des solutions innovantes et puissantes dans le domaine de l'énergie durable.<br>
+        Grâce à notre expertise dans le secteur énergétique et à l'utilisation de technologies avancées, nous construisons aujourd'hui l'énergie de demain.
+      </p>
+    </section>
+    <div class="webgl-button-container" data-aos="flip-right">
+      <canvas class="webgl-canvas"></canvas>
+      <button type="button"><i class="fas fa-paper-plane"></i> Nous contacter</button>
+    </div>
   </main>
-  <footer>
+  <footer data-aos="fade-up">
+    <span>
+      <i class="fab fa-linkedin"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fas fa-envelope"></i>
+    </span>
+    <br />
     © 2025 Synapsion Energie Group. Tous droits réservés.
   </footer>
+  <script src="webgl-button.js"></script>
+  <!-- AOS JS for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 900,
+      once: true
+    });
+  </script>
 </body>
 </html>
