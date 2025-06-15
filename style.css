@@ -1,23 +1,23 @@
 :root {
-  --color-bg: #e9ecef;              /* Açık gri arka plan */
-  --color-bg-card: #fff;
+  --color-bg: #e9ecef;              /* Açık gri ana arka plan */
+  --color-bg-card: #f6f6f7;         /* Açık gri kartlar ve içerik kutuları */
   --color-text: #212529;
   --color-heading: #16408c;
   --color-primary: #2980ef;
-  --color-footer: #16408c;
-  --color-footer-text: #fff;
-  --color-nav-bg: #fff;
-  --color-nav-hover: #eaf2fb;
+  --color-footer: #f6f6f7;
+  --color-footer-text: #16408c;
+  --color-nav-bg: #f6f6f7;
+  --color-nav-hover: #e0e4e8;
   --color-input-bg: #fafdff;
   --color-border: #d0d6e1;
 }
 body[data-theme="dark"] {
-  --color-bg: #000;                 /* Sim siyah arka plan */
+  --color-bg: #000000;                 /* Sim siyah ana arka plan */
   --color-bg-card: #18191c;
   --color-text: #e2e6ef;
   --color-heading: #6bb5ff;
   --color-primary: #6bb5ff;
-  --color-footer: #000;
+  --color-footer: #000000;
   --color-footer-text: #cce4ff;
   --color-nav-bg: #18191c;
   --color-nav-hover: #24262b;
