@@ -4,31 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Synapsion Energie Group</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- AOS for professional scroll animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
+  <header data-aos="fade-down">
     <div style="display: flex; align-items: center;">
       <a href="index.html">
-        <img src="lion-logo.png" alt="Logo" style="height:60px;margin-right:25px;" />
+        <img src="lion-logo.png" alt="Logo" class="site-logo" />
       </a>
-      <h1>Synapsion Energie Group</h1>
+      <h1 data-aos="zoom-in"><i class="fas fa-bolt"></i> Synapsion Energie Group</h1>
     </div>
     <nav>
-      <a href="index.html">Accueil</a>
-      <a href="apropos.html">À propos</a>
-      <a href="services.html">Services</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-aos="fade-right"><i class="fas fa-home"></i> Accueil</a>
+      <a href="apropos.html" data-aos="fade-down"><i class="fas fa-users"></i> À propos</a>
+      <a href="services.html" data-aos="fade-up"><i class="fas fa-cogs"></i> Services</a>
+      <a href="contact.html" data-aos="fade-left"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
   </header>
-
   <main>
-    <h2>Contactez-nous</h2>
-    <p>Pour toute question ou demande de collaboration, veuillez nous envoyer un e-mail à : <a href="mailto:contact@synapsion.fr" style="color:#00bfff;">contact@synapsion.fr</a></p>
+    <section data-aos="zoom-in">
+      <h2><i class="fas fa-envelope"></i> Contactez-nous</h2>
+      <form data-aos="fade-up" style="max-width:400px;margin:auto;">
+        <label for="name"><i class="fas fa-user"></i> Nom:</label>
+        <input type="text" id="name" name="name" required /><br>
+        <label for="email"><i class="fas fa-at"></i> Email:</label>
+        <input type="email" id="email" name="email" required /><br>
+        <label for="message"><i class="fas fa-comment"></i> Message:</label>
+        <textarea id="message" name="message" required></textarea><br>
+        <div class="webgl-button-container" data-aos="zoom-in">
+          <canvas class="webgl-canvas"></canvas>
+          <button type="submit"><i class="fas fa-paper-plane"></i> Envoyer</button>
+        </div>
+      </form>
+    </section>
   </main>
-
-  <footer>
+  <footer data-aos="fade-up">
+    <span>
+      <i class="fab fa-linkedin"></i>
+      <i class="fab fa-twitter"></i>
+      <i class="fas fa-envelope"></i>
+    </span>
+    <br />
     © 2025 Synapsion Energie Group. Tous droits réservés.
   </footer>
+  <script src="webgl-button.js"></script>
+  <!-- AOS JS for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 900,
+      once: true
+    });
+  </script>
 </body>
 </html>
