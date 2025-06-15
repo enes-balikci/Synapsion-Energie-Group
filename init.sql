@@ -3,5 +3,12 @@ CREATE TABLE IF NOT EXISTS visitors (
   ip TEXT,
   user_agent TEXT,
   page TEXT,
-  visit_time DATETIME DEFAULT CURRENT_TIMESTAMP
+  referrer TEXT,
+  visit_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+  country TEXT,
+  city TEXT,
+  timezone TEXT,
+  language TEXT,
+  screen_resolution TEXT,
+  is_returning INTEGER DEFAULT 0
 );
