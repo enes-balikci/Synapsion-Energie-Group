@@ -4,10 +4,62 @@ body {
   font-family: 'Helvetica', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
 }
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background-color: #000;
+  border-bottom: 2px solid #001f3f;
+}
+
+header img {
+  height: 60px;
+  margin-right: 25px;
+}
+
+header h1 {
+  color: #001f3f;
+  font-size: 28px;
+  margin: 0;
+}
+
+nav a {
+  color: white;
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #00bfff;
+}
+
+main {
+  padding: 60px 40px;
+  max-width: 900px;
+  margin: auto;
+}
+
+main h2 {
+  color: #001f3f;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+main p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+/* WebGL button container styles */
 .webgl-button-container {
   position: relative;
   display: inline-block;
 }
+
 .webgl-canvas {
   position: absolute;
   top: 0; left: 0;
@@ -15,7 +67,9 @@ body {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  border-radius: 6px;
 }
+
 .webgl-btn {
   position: relative;
   z-index: 1;
@@ -30,6 +84,14 @@ body {
   margin-top: 20px;
   transition: color 0.3s;
 }
+
 .webgl-btn:hover {
   color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #555;
 }
