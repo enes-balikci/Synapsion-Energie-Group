@@ -12,17 +12,17 @@
   --color-border: #d0d6e1;
 }
 body[data-theme="dark"] {
-  --color-bg: #16191f;
-  --color-bg-card: #232733;
+  --color-bg: #000;
+  --color-bg-card: #18191c;
   --color-text: #e2e6ef;
   --color-heading: #6bb5ff;
   --color-primary: #6bb5ff;
-  --color-footer: #0e172a;
+  --color-footer: #000;
   --color-footer-text: #cce4ff;
-  --color-nav-bg: #181c24;
-  --color-nav-hover: #31384b;
-  --color-input-bg: #202736;
-  --color-border: #2a3550;
+  --color-nav-bg: #18191c;
+  --color-nav-hover: #24262b;
+  --color-input-bg: #101014;
+  --color-border: #23242a;
 }
 
 body {
