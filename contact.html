@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>À propos | Synapsion Energie Group</title>
+  <title>Contact | Synapsion Energie Group</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -17,38 +17,32 @@
         <ul>
           <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
           <li class="nav-item"><a href="services.html" class="nav-link"><i class="fas fa-tools"></i> Services</a></li>
-          <li class="nav-item"><a href="apropos.html" class="nav-link active"><i class="fas fa-users"></i> À propos</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+          <li class="nav-item"><a href="apropos.html" class="nav-link"><i class="fas fa-users"></i> À propos</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link active"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
   <main class="site-main container">
     <section class="hero-section">
-      <h1 class="main-title"><i class="fas fa-users"></i> À propos de Synapsion Energie Group</h1>
-      <h2 class="subtitle">Notre histoire et nos valeurs</h2>
+      <h1 class="main-title"><i class="fas fa-envelope"></i> Contactez-nous</h1>
+      <h2 class="subtitle">Nous sommes à votre écoute</h2>
       <p class="lead">
-        Synapsion Energie Group s’est donné pour mission de rendre l’énergie durable accessible à tous, grâce à l’innovation et à l’engagement de ses équipes.
+        Remplissez le formulaire ci-dessous pour toute demande d'information ou de devis, nous reviendrons vers vous dans les plus brefs délais.
       </p>
     </section>
     <section class="categories-section">
-      <h2 class="section-title">Nos piliers</h2>
-      <div class="categories-grid">
-        <div class="category-card">
-          <i class="fas fa-leaf category-icon"></i>
-          <h3>Développement durable</h3>
-          <p>Respect de l’environnement et responsabilité sociale.</p>
-        </div>
-        <div class="category-card">
-          <i class="fas fa-brain category-icon"></i>
-          <h3>Innovation</h3>
-          <p>Technologies de pointe et esprit d’équipe.</p>
-        </div>
-        <div class="category-card">
-          <i class="fas fa-handshake category-icon"></i>
-          <h3>Confiance</h3>
-          <p>Partenariats solides et transparence.</p>
-        </div>
+      <h2 class="section-title">Formulaire de contact</h2>
+      <div class="contact-form-container">
+        <form class="contact-form" autocomplete="off">
+          <label for="name">Nom complet</label>
+          <input type="text" id="name" name="name" required>
+          <label for="email">Adresse e-mail</label>
+          <input type="email" id="email" name="email" required>
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <button type="submit" class="primary-btn"><i class="fas fa-paper-plane"></i> Envoyer</button>
+        </form>
       </div>
     </section>
   </main>
