@@ -4,12 +4,12 @@
   --color-text: #212529;
   --color-heading: #16408c;
   --color-primary: #2980ef;
-  --color-footer: #f6f6f7;
-  --color-footer-text: #16408c;
-  --color-nav-bg: #f6f6f7;
-  --color-nav-hover: #e0e4e8;
-  --color-input-bg: #fafdff;
-  --color-border: #d0d6e1;
+  --color-footer: #e0e4e8;          /* Kapalı gri footer */
+  --color-footer-text: #222831;     /* Koyu gri yazı */
+  --color-nav-bg: #f6f6f7;          /* Açık gri navigasyon */
+  --color-nav-hover: #e0e4e8;       /* Kapalı gri hover */
+  --color-input-bg: #f4f4f6;        /* Hafif kırık beyaz gri input */
+  --color-border: #d0d6e1;          /* Nötr gri sınır */
 }
 body[data-theme="dark"] {
   --color-bg: #000000;                 /* Sim siyah ana arka plan */
