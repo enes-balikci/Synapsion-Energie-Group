@@ -4,41 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Synapsion Energie Group</title>
-  <!-- Font Awesome CDN for professional icons -->
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- AOS for professional scroll animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
+  <header data-aos="fade-down">
     <div style="display: flex; align-items: center;">
       <a href="index.html">
         <img src="lion-logo.png" alt="Logo" class="site-logo" />
       </a>
-      <h1><i class="fas fa-bolt"></i> Synapsion Energie Group</h1>
+      <h1 data-aos="zoom-in"><i class="fas fa-bolt"></i> Synapsion Energie Group</h1>
     </div>
     <nav>
-      <a href="index.html"><i class="fas fa-home"></i> Accueil</a>
-      <a href="apropos.html"><i class="fas fa-users"></i> À propos</a>
-      <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-      <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="index.html" data-aos="fade-right"><i class="fas fa-home"></i> Accueil</a>
+      <a href="apropos.html" data-aos="fade-down"><i class="fas fa-users"></i> À propos</a>
+      <a href="services.html" data-aos="fade-up"><i class="fas fa-cogs"></i> Services</a>
+      <a href="contact.html" data-aos="fade-left"><i class="fas fa-envelope"></i> Contact</a>
     </nav>
   </header>
-
   <main>
-    <h2><i class="fas fa-cogs"></i> Nos Services</h2>
+    <h2 data-aos="fade-up"><i class="fas fa-cogs"></i> Nos Services</h2>
     <ul>
-      <li><i class="fas fa-solar-panel"></i> Production d'énergie renouvelable (solaire, éolien)</li>
-      <li><i class="fas fa-network-wired"></i> Optimisation des réseaux électriques</li>
-      <li><i class="fas fa-battery-full"></i> Stockage d'énergie intelligente</li>
-      <li><i class="fas fa-microchip"></i> Solutions IoT pour la gestion énergétique</li>
+      <li data-aos="fade-right"><i class="fas fa-solar-panel"></i> Production d'énergie renouvelable (solaire, éolien)</li>
+      <li data-aos="fade-left"><i class="fas fa-network-wired"></i> Optimisation des réseaux électriques</li>
+      <li data-aos="fade-right"><i class="fas fa-battery-full"></i> Stockage d'énergie intelligente</li>
+      <li data-aos="fade-left"><i class="fas fa-microchip"></i> Solutions IoT pour la gestion énergétique</li>
     </ul>
-    <div class="webgl-button-container">
+    <div class="webgl-button-container" data-aos="zoom-in">
       <canvas class="webgl-canvas"></canvas>
       <button type="button"><i class="fas fa-paper-plane"></i> Nous contacter</button>
     </div>
   </main>
-
-  <footer>
+  <footer data-aos="fade-up">
     <span>
       <i class="fab fa-linkedin"></i>
       <i class="fab fa-twitter"></i>
@@ -48,5 +48,13 @@
     © 2025 Synapsion Energie Group. Tous droits réservés.
   </footer>
   <script src="webgl-button.js"></script>
+  <!-- AOS JS for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 900,
+      once: true
+    });
+  </script>
 </body>
 </html>
