@@ -1,19 +1,9 @@
+const express = require("express");
 const helmet = require("helmet");
-const csurf = require("csurf");
-const jwt = require("jsonwebtoken");
+const saml = require("passport-saml").Strategy; // SSO için
+const verifyRecaptcha = require("./recaptcha-middleware"); // Kendi yazacağın middleware
+const app = express();
 
-// Express app...
-app.use(helmet({
-  contentSecurityPolicy: { useDefaults: true },
-  referrerPolicy: { policy: "no-referrer" },
-  frameguard: { action: "deny" }
-}));
-app.use(csurf());
-
-// JWT auth örneği
-app.post("/api/secure-login", (req, res) => {
-  // ...do user/password check...
-  const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "2h" });
-  res.cookie("jwt", token, { httpOnly: true, secure: true, sameSite: "Strict" });
-  res.json({ mfaRequired: true });
-});
+app.use(helmet());
+app.use(verifyRecaptcha); // Giriş endpointinde reCAPTCHA doğrulaması
+app.get('/auth/saml', (req, res) => { /* SAML/OIDC entegrasyonu */ });
