@@ -2,74 +2,84 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:;">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://ipapi.co; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; frame-ancestors 'none';">
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="referrer" content="no-referrer" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Synapsion Energie Group</title>
-  <!-- Font Awesome for icons -->
+  <title>Espace Sécurisé | Synapsion Energie Group</title>
+  <!-- TailwindCSS CDN for modern UI -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <!-- AOS for professional scroll animations -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="secure-style.css" />
 </head>
-<body>
-  <header data-aos="fade-down">
-    <div style="display: flex; align-items: center;">
-      <a href="index.html">
-        <img src="lion-logo.png" alt="Logo" class="site-logo" />
-      </a>
-      <h1 data-aos="zoom-in"><i class="fas fa-bolt"></i> Synapsion Energie Group</h1>
+<body class="bg-gradient-to-br from-gray-100 to-blue-50 min-h-screen text-gray-900">
+  <header class="flex justify-between items-center p-4 bg-white shadow-md">
+    <div class="flex items-center gap-3">
+      <img src="lion-logo.png" alt="Logo Synapsion" class="h-10 w-10 rounded" />
+      <span class="font-bold text-lg text-blue-800">Synapsion Energie Group</span>
     </div>
-    <nav>
-      <a href="index.html" data-aos="fade-right"><i class="fas fa-home"></i> Accueil</a>
-      <a href="apropos.html" data-aos="fade-down"><i class="fas fa-users"></i> À propos</a>
-      <a href="services.html" data-aos="fade-up"><i class="fas fa-cogs"></i> Services</a>
-      <a href="contact.html" data-aos="fade-left"><i class="fas fa-envelope"></i> Contact</a>
+    <nav class="flex gap-6">
+      <a href="/" class="hover:text-blue-700 font-semibold"><i class="fas fa-home"></i> Accueil</a>
+      <a href="/secure-index.html" class="text-blue-700 font-semibold border-b-2 border-blue-700"><i class="fas fa-lock"></i> Espace Sécurisé</a>
     </nav>
   </header>
-  <main>
-    <section data-aos="zoom-in">
-      <h2><i class="fas fa-lightbulb"></i> Des solutions innovantes pour l'énergie</h2>
-      <p>
-        Synapsion Energie Group est une entreprise leader qui propose des solutions innovantes et puissantes dans le domaine de l'énergie durable.<br>
-        Grâce à notre expertise dans le secteur énergétique et à l'utilisation de technologies avancées, nous construisons aujourd'hui l'énergie de demain.
-      </p>
+
+  <main class="max-w-2xl mx-auto mt-12 bg-white rounded-xl shadow-lg p-8">
+    <!-- Secure Login Section -->
+    <section id="login-section" class="">
+      <h2 class="text-2xl font-bold mb-6 text-blue-800 flex items-center gap-2"><i class="fas fa-user-shield"></i> Connexion Sécurisée</h2>
+      <form id="login-form" autocomplete="off" class="flex flex-col gap-4" aria-label="Connexion">
+        <label for="email" class="font-semibold">Adresse e-mail</label>
+        <input class="border rounded p-2 focus:outline-blue-400" type="email" id="email" name="email" required autocomplete="username" />
+
+        <label for="password" class="font-semibold">Mot de passe</label>
+        <input class="border rounded p-2 focus:outline-blue-400" type="password" id="password" name="password" required autocomplete="current-password" minlength="8" />
+
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="remember" name="remember" class="accent-blue-600" />
+          <label for="remember" class="text-gray-700 text-sm">Rester connecté</label>
+        </div>
+
+        <button type="submit" class="bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
+        <span id="login-error" class="text-red-600 text-sm hidden"></span>
+      </form>
+      <div id="mfa-section" class="hidden mt-6">
+        <label for="mfa" class="font-semibold">Code de vérification (MFA)</label>
+        <input class="border rounded p-2 focus:outline-blue-400" type="text" id="mfa" name="mfa" maxlength="6" autocomplete="one-time-code" inputmode="numeric" />
+        <button type="button" id="mfa-submit" class="bg-blue-600 text-white font-semibold py-2 rounded mt-2 hover:bg-blue-700 transition"><i class="fas fa-fingerprint"></i> Vérifier</button>
+        <span id="mfa-error" class="text-red-600 text-sm hidden"></span>
+      </div>
     </section>
-    <div class="webgl-button-container" data-aos="flip-right">
-      <canvas class="webgl-canvas"></canvas>
-      <button type="button"><i class="fas fa-paper-plane"></i> Nous contacter</button>
-    </div>
-    <form method="POST" action="https://yourformendpoint.com" autocomplete="off" data-aos="fade-up">
-      <input type="text" name="website" style="display:none">
-      <label for="name">Nom:</label>
-      <input type="text" id="name" name="name" required minlength="2" maxlength="50" pattern="[A-Za-z\s\-]+" />
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required maxlength="100" />
-      <label for="message">Message:</label>
-      <textarea id="message" name="message" required minlength="10" maxlength="1000"></textarea>
-      <button type="submit">Envoyer</button>
-    </form>
+
+    <!-- User Dashboard (Protected, only appears after login) -->
+    <section id="dashboard-section" class="hidden">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-blue-800 flex items-center gap-2"><i class="fas fa-user-circle"></i> Bienvenue, <span id="user-email"></span></h2>
+        <button id="logout-btn" class="text-red-500 hover:text-red-700 font-semibold flex items-center gap-1"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+      </div>
+      <div class="mb-8">
+        <p class="text-gray-700">Vous êtes connecté à l'espace sécurisé. Toutes vos actions sont monitorées et protégées.</p>
+        <ul class="mt-4 text-gray-600 text-sm list-disc pl-4">
+          <li>Session sécurisée via JWT, cookies HttpOnly/Secure, et anti-CSRF</li>
+          <li>Authentification à deux facteurs (MFA)</li>
+          <li>Détection d'anomalies et alertes en temps réel</li>
+          <li>Logs chiffrés et conformité RGPD</li>
+        </ul>
+      </div>
+      <div class="border-t pt-4">
+        <h3 class="font-semibold mb-2 text-blue-700">Historique d'activité récente</h3>
+        <ul id="activity-log" class="space-y-1 text-gray-700 text-sm">
+          <li>Chargement...</li>
+        </ul>
+      </div>
+    </section>
   </main>
-  <footer data-aos="fade-up">
-    <span>
-      <i class="fab fa-linkedin"></i>
-      <i class="fab fa-twitter"></i>
-      <i class="fas fa-envelope"></i>
-    </span>
-    <br />
-    © 2025 Synapsion Energie Group. Tous droits réservés.
+
+  <footer class="text-center text-gray-600 text-sm py-6 mt-12">
+    © 2025 Synapsion Energie Group. Sécurité avancée & conformité RGPD.
   </footer>
-  <script src="webgl-button.js"></script>
-  <!-- AOS JS for animations -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 900,
-      once: true
-    });
-  </script>
+  <script src="secure-index.js"></script>
 </body>
 </html>
