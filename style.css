@@ -7,11 +7,9 @@
   --color-muted: #5f6b7a;
   --color-border: #d3d7df;
   --color-footer: #eceff3;
-  --color-link: #1565c0;
   --font-main: 'Segoe UI', 'Arial', sans-serif;
 }
 
-/* General */
 html, body {
   background: var(--color-bg);
   color: var(--color-primary);
@@ -22,8 +20,13 @@ html, body {
   min-height: 100vh;
 }
 
-a { color: var(--color-link); text-decoration: none; }
-a:hover, .nav-link.active { text-decoration: underline; }
+a {
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+a:hover, .nav-link.active {
+  text-decoration: underline;
+}
 
 .container {
   width: 100%;
@@ -38,6 +41,9 @@ a:hover, .nav-link.active { text-decoration: underline; }
   background: var(--color-white);
   border-bottom: 1px solid var(--color-border);
   padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .header-flex {
@@ -56,11 +62,15 @@ a:hover, .nav-link.active { text-decoration: underline; }
   border: 1.5px solid var(--color-border);
 }
 
-.main-nav {
+/* Navigation */
+.main-nav ul {
   display: flex;
-  gap: 28px;
+  gap: 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-
+.nav-item { position: relative; }
 .nav-link {
   font-weight: 500;
   font-size: 1em;
@@ -72,8 +82,39 @@ a:hover, .nav-link.active { text-decoration: underline; }
   align-items: center;
   gap: 7px;
 }
-
 .nav-link:hover, .nav-link.active {
+  background: var(--color-footer);
+  color: var(--color-secondary);
+}
+/* Dropdown */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(24,65,122,0.08);
+  min-width: 200px;
+  z-index: 20;
+  margin-top: 3px;
+}
+.dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+.dropdown-menu li {
+  padding: 0;
+  margin: 0;
+}
+.dropdown-menu a {
+  display: block;
+  padding: 11px 16px;
+  color: var(--color-primary);
+  border-radius: 3px;
+  font-size: 1em;
+}
+.dropdown-menu a:hover {
   background: var(--color-footer);
   color: var(--color-secondary);
 }
@@ -128,32 +169,48 @@ a:hover, .nav-link.active { text-decoration: underline; }
   box-shadow: 0 4px 14px rgba(21,101,192,0.11);
 }
 
-/* Features */
-.features-section {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
-  margin-top: 20px;
-  margin-bottom: 0;
+/* Categorized Section */
+.categories-section {
+  margin-top: 36px;
 }
-.feature-card {
+.section-title {
+  font-size: 1.2em;
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: 22px;
+  text-align: center;
+}
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-bottom: 18px;
+}
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: var(--color-footer);
   border: 1px solid var(--color-border);
   border-radius: 10px;
-  flex: 1;
-  padding: 28px 18px 22px 18px;
+  padding: 28px 12px 18px 12px;
   text-align: center;
   box-shadow: 0 1px 8px rgba(24,65,122,0.04);
+  transition: box-shadow 0.15s, border-color 0.15s;
 }
-.feature-icon {
-  font-size: 2.5em;
+.category-card:hover {
+  border-color: var(--color-secondary);
+  box-shadow: 0 4px 18px rgba(21,101,192,0.13);
+}
+.category-icon {
+  font-size: 2.4em;
   color: var(--color-accent);
-  margin-bottom: 14px;
+  margin-bottom: 13px;
 }
-.feature-card h3 {
-  font-size: 1.13em;
+.category-card h3 {
+  margin-bottom: 8px;
   color: var(--color-primary);
-  margin-bottom: 10px;
+  font-size: 1.07em;
   font-weight: 600;
 }
 
@@ -174,7 +231,7 @@ a:hover, .nav-link.active { text-decoration: underline; }
   padding: 0 24px;
 }
 .site-footer a {
-  color: var(--color-link);
+  color: var(--color-secondary);
   margin: 0 10px;
   font-size: 1.2em;
   vertical-align: middle;
@@ -182,14 +239,13 @@ a:hover, .nav-link.active { text-decoration: underline; }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .features-section { flex-direction: column; gap: 18px; }
+  .categories-grid { grid-template-columns: 1fr 1fr; }
   .container { padding-left: 8px; padding-right: 8px; }
   .header-flex { height: auto; flex-direction: column; gap: 18px; }
   .footer-flex { flex-direction: column; gap: 10px; }
 }
 @media (max-width: 600px) {
   .site-main { padding: 18px 0; border-radius: 6px; }
-  .features-section { gap: 10px; }
-  .feature-card { padding: 16px 6px 14px 6px; }
+  .categories-grid { grid-template-columns: 1fr; gap: 14px; }
   .footer-flex { padding: 0 6px; }
 }
