@@ -17,10 +17,10 @@ CREATE TABLE IF NOT EXISTS visitors (
   consent BOOLEAN DEFAULT FALSE
 );
 
--- Events table
+-- Visitor Events table
 CREATE TABLE IF NOT EXISTS visitor_events (
   id SERIAL PRIMARY KEY,
-  visitor_id INTEGER REFERENCES visitors(id),
+  visitor_id INTEGER REFERENCES visitors(id) ON DELETE CASCADE,
   event_type VARCHAR(64),
   event_data JSONB,
   event_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
