@@ -1,14 +1,27 @@
+-- Visitors table
 CREATE TABLE IF NOT EXISTS visitors (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  ip TEXT,
+  id SERIAL PRIMARY KEY,
+  session_id VARCHAR(64),
+  fingerprint VARCHAR(128),
+  ip VARCHAR(64),
   user_agent TEXT,
-  page TEXT,
-  referrer TEXT,
-  visit_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-  country TEXT,
-  city TEXT,
-  timezone TEXT,
-  language TEXT,
-  screen_resolution TEXT,
-  is_returning INTEGER DEFAULT 0
+  page VARCHAR(512),
+  referrer VARCHAR(512),
+  visit_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  country VARCHAR(64),
+  city VARCHAR(128),
+  timezone VARCHAR(64),
+  language VARCHAR(32),
+  screen_resolution VARCHAR(32),
+  is_returning BOOLEAN DEFAULT FALSE,
+  consent BOOLEAN DEFAULT FALSE
+);
+
+-- Events table
+CREATE TABLE IF NOT EXISTS visitor_events (
+  id SERIAL PRIMARY KEY,
+  visitor_id INTEGER REFERENCES visitors(id),
+  event_type VARCHAR(64),
+  event_data JSONB,
+  event_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
