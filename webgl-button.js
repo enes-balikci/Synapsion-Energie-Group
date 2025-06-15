@@ -1,22 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll('.webgl-button-container').forEach(function (container) {
-    const canvas = container.querySelector('.webgl-canvas');
-    const button = container.querySelector('.webgl-btn');
-    if (!canvas || !button) return;
+  // Tüm <button> ve <input type="button|submit|reset"> öğelerini bul
+  const buttons = Array.from(document.querySelectorAll('button,input[type="button"],input[type="submit"],input[type="reset"]'));
 
+  buttons.forEach(function (btn) {
+    // Zaten kapsayıcıya alınmışsa tekrar alma
+    if (btn.parentElement && btn.parentElement.classList.contains('webgl-button-container')) return;
+
+    // Kapsayıcı oluştur
+    const container = document.createElement('span');
+    container.className = 'webgl-button-container';
+    container.style.display = 'inline-block';
+    container.style.position = 'relative';
+
+    // Canvas ekle
+    const canvas = document.createElement('canvas');
+    canvas.className = 'webgl-canvas';
+    canvas.style.position = 'absolute';
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = 0;
+    canvas.style.pointerEvents = 'none';
+    canvas.style.borderRadius = getComputedStyle(btn).borderRadius || '6px';
+
+    // Kapsayıcıya ekle
+    btn.parentNode.insertBefore(container, btn);
+    container.appendChild(canvas);
+    container.appendChild(btn);
+
+    // WebGL başlat
     function syncCanvasSize() {
-      canvas.width = button.offsetWidth;
-      canvas.height = button.offsetHeight;
-      canvas.style.width = button.offsetWidth + 'px';
-      canvas.style.height = button.offsetHeight + 'px';
+      canvas.width = btn.offsetWidth;
+      canvas.height = btn.offsetHeight;
     }
     syncCanvasSize();
     window.addEventListener('resize', syncCanvasSize);
 
-    // WebGL başlat
     const gl = canvas.getContext('webgl', { alpha: true });
     if (!gl) {
-      canvas.style.display = "none"; // WebGL desteklenmiyorsa canvası gizle
+      canvas.style.display = "none";
       return;
     }
 
@@ -27,8 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         gl_Position = vec4(a_position, 0, 1);
       }
     `;
-
-    // Fragment shader (şeffaf mavi dalga efektli)
+    // Fragment shader (şeffaf mavi dalga)
     const fsSource = `
       precision mediump float;
       uniform float u_time;
@@ -36,13 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
       void main() {
         vec2 uv = gl_FragCoord.xy / u_resolution.xy;
         float wave = 0.5 + 0.5 * sin(u_time + uv.x * 10.0 + uv.y * 10.0);
-        float alpha = 0.35 + 0.25 * wave;
+        float alpha = 0.28 + 0.22 * wave;
         vec3 color = mix(vec3(0.0,0.7,1.0), vec3(1.0,1.0,1.0), uv.y);
         gl_FragColor = vec4(color, alpha);
       }
     `;
-
-    // Shader yardımcıları
     function compileShader(gl, type, source) {
       const shader = gl.createShader(type);
       gl.shaderSource(shader, source);
@@ -54,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return shader;
     }
-
     function createProgram(gl, vsSource, fsSource) {
       const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vsSource);
       const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fsSource);
@@ -70,22 +89,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       return program;
     }
-
     const program = createProgram(gl, vsSource, fsSource);
     if (!program) return;
 
-    // Quad verisi
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([
         -1, -1,
-        1, -1,
-        -1, 1,
-        -1, 1,
-        1, -1,
-        1, 1,
+         1, -1,
+        -1,  1,
+        -1,  1,
+         1, -1,
+         1,  1,
       ]),
       gl.STATIC_DRAW
     );
@@ -97,8 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let startTime = performance.now();
     let hover = false;
 
-    button.addEventListener('mouseenter', function () { hover = true; });
-    button.addEventListener('mouseleave', function () { hover = false; });
+    btn.addEventListener('mouseenter', function () { hover = true; });
+    btn.addEventListener('mouseleave', function () { hover = false; });
 
     function render() {
       syncCanvasSize();
@@ -111,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
       gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
       let t = (performance.now() - startTime) / 1000;
-      if (hover) t *= 2.1; // Hoverda animasyon hızlansın
+      if (hover) t *= 2.1;
 
       gl.uniform1f(timeLocation, t);
       gl.uniform2f(resolutionLocation, gl.drawingBufferWidth, gl.drawingBufferHeight);
