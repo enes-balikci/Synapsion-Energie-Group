@@ -9,55 +9,69 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 40px;
+  padding: 20px 5vw;
   background-color: #000;
   border-bottom: 2px solid #001f3f;
+  flex-wrap: wrap;
 }
 
 header img {
-  height: 60px;
-  margin-right: 25px;
+  height: 50px;
+  margin-right: 18px;
+  max-width: 100px;
 }
 
 header h1 {
   color: #001f3f;
-  font-size: 28px;
+  font-size: 6vw;
+  min-width: 180px;
+  font-size: clamp(20px, 4vw, 32px);
   margin: 0;
+}
+
+nav {
+  margin-top: 10px;
 }
 
 nav a {
   color: white;
-  margin-left: 20px;
+  margin-left: 18px;
   text-decoration: none;
   font-weight: bold;
+  font-size: clamp(15px, 2vw, 18px);
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
 }
 
 nav a:hover {
   color: #00bfff;
+  background: #222;
 }
 
 main {
-  padding: 60px 40px;
+  padding: 8vw 5vw;
   max-width: 900px;
   margin: auto;
 }
 
 main h2 {
   color: #001f3f;
-  font-size: 24px;
+  font-size: clamp(18px, 4vw, 28px);
   margin-bottom: 15px;
 }
 
-main p {
-  font-size: 18px;
+main p, main ul, main li {
+  font-size: clamp(14px, 2.5vw, 18px);
   line-height: 1.6;
   color: #ddd;
 }
 
-/* WebGL button container styles */
 .webgl-button-container {
   position: relative;
   display: inline-block;
+  min-width: 120px;
 }
 
 .webgl-canvas {
@@ -70,28 +84,88 @@ main p {
   border-radius: 6px;
 }
 
-.webgl-btn {
+.webgl-btn, button, input[type="button"], input[type="submit"], input[type="reset"] {
   position: relative;
   z-index: 1;
   background-color: transparent;
   color: #001f3f;
   border: none;
   padding: 14px 30px;
-  font-size: 18px;
+  font-size: clamp(14px, 2.5vw, 18px);
   font-weight: 600;
   cursor: pointer;
   border-radius: 6px;
   margin-top: 20px;
-  transition: color 0.3s;
+  transition: color 0.3s, background 0.3s;
+  min-width: 100px;
+  outline: none;
 }
 
-.webgl-btn:hover {
+.webgl-btn:hover,
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
   color: white;
+  background: rgba(0,31,63,0.1);
 }
 
 footer {
   text-align: center;
-  padding: 20px;
-  font-size: 14px;
+  padding: 20px 5vw;
+  font-size: clamp(12px, 2vw, 16px);
   color: #555;
+  background: #111;
+  margin-top: 40px;
+}
+
+/* Mobil menü ve küçük ekranlar için düzenlemeler */
+@media (max-width: 700px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 3vw;
+  }
+  header h1 {
+    margin-bottom: 10px;
+    font-size: clamp(16px, 6vw, 26px);
+  }
+  nav {
+    width: 100%;
+    margin-top: 8px;
+  }
+  nav a {
+    margin: 6px 8px 6px 0;
+    font-size: clamp(13px, 3vw, 17px);
+  }
+  main {
+    padding: 7vw 3vw;
+  }
+  .webgl-btn,
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    padding: 12px 10vw;
+    font-size: clamp(13px, 4vw, 17px);
+    min-width: 60px;
+  }
+}
+
+/* Çok küçük cihazlar için */
+@media (max-width: 400px) {
+  header h1 {
+    font-size: 15px;
+  }
+  nav a {
+    font-size: 12px;
+    padding: 3px 5px;
+  }
+  main {
+    padding: 4vw 2vw;
+  }
+  footer {
+    font-size: 11px;
+    padding: 12px 2vw;
+  }
 }
