@@ -1,21 +1,21 @@
 :root {
-  --color-bg: #e9ecef;              /* Açık gri ana arka plan */
-  --color-bg-card: #f6f6f7;         /* Açık gri kartlar ve içerik kutuları */
+  --color-bg: #e9ecef;
+  --color-bg-card: #f6f6f7;
   --color-text: #262c38;
   --color-heading: #18417a;
   --color-primary: #1570ef;
   --color-accent: #02d9d9;
-  --color-footer: #e0e4e8;          /* Kapalı gri footer */
-  --color-footer-text: #18417a;     /* Koyu mavi */
-  --color-nav-bg: #f6f6f7;          /* Açık gri navigasyon */
-  --color-nav-hover: #dee4ec;       /* Kapalı gri hover */
-  --color-input-bg: #f4f4f6;        /* Hafif kırık beyaz gri input */
-  --color-border: #c4ccd6;          /* Nötr gri sınır */
+  --color-footer: #e0e4e8;
+  --color-footer-text: #18417a;
+  --color-nav-bg: #f6f6f7;
+  --color-nav-hover: #dee4ec;
+  --color-input-bg: #f4f4f6;
+  --color-border: #c4ccd6;
   --box-radius: 16px;
   --transition: 0.18s cubic-bezier(.4,0,.2,1);
 }
 body[data-theme="dark"] {
-  --color-bg: #000000;                 /* Sim siyah ana arka plan */
+  --color-bg: #000000;
   --color-bg-card: #181c22;
   --color-text: #eaf0ff;
   --color-heading: #6bb5ff;
@@ -48,7 +48,7 @@ header {
   margin-bottom: 32px;
   transition: background var(--transition), border-color var(--transition);
 }
-header > div {
+.header-container {
   display: flex;
   align-items: center;
   padding: 20px 6vw 0 6vw;
@@ -103,6 +103,7 @@ header nav a {
   transition: background var(--transition), color var(--transition);
   color: var(--color-heading);
   letter-spacing: .01em;
+  text-decoration: none;
 }
 header nav a.active, header nav a:focus, header nav a:hover {
   background: var(--color-nav-hover);
@@ -111,7 +112,6 @@ header nav a.active, header nav a:focus, header nav a:hover {
   text-underline-offset: 3px;
 }
 
-/* Kart ve Ana İçerik */
 main {
   max-width: 1040px;
   margin: 0 auto 38px auto;
@@ -167,6 +167,13 @@ ul li {
   padding-left: 0.5em;
 }
 ul li::marker { color: var(--color-primary); }
+
+.card-container {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 button, input[type="submit"] {
   background: linear-gradient(90deg, var(--color-primary) 60%, var(--color-accent) 100%);
@@ -237,13 +244,13 @@ footer span i {
 
 @media (max-width: 950px) {
   main { max-width: 98vw; padding: 0 2vw; }
-  header > div { flex-direction: column; align-items: flex-start; padding: 18px 2vw 0 2vw; }
+  .header-container { flex-direction: column; align-items: flex-start; padding: 18px 2vw 0 2vw; }
 }
 @media (max-width: 600px) {
   .profile-card, .service-card { padding: 15px 4px; }
   .profile-photo { width: 70px; height: 70px; }
   header nav { flex-direction: column; gap: 10px; }
-  header > div { padding: 10px 3vw 0 3vw; }
+  .header-container { padding: 10px 3vw 0 3vw; }
   main { border-radius: 10px; margin-bottom: 16px; }
   footer { border-radius: 12px 12px 0 0; font-size: 0.97em; padding: 14px 0 14px 0; }
 }
