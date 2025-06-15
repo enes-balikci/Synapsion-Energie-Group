@@ -1,5 +1,5 @@
 :root {
-  --color-bg: #f5f8fa;
+  --color-bg: #e9ecef;              /* Açık gri arka plan */
   --color-bg-card: #fff;
   --color-text: #212529;
   --color-heading: #16408c;
@@ -12,7 +12,7 @@
   --color-border: #d0d6e1;
 }
 body[data-theme="dark"] {
-  --color-bg: #000;
+  --color-bg: #000;                 /* Sim siyah arka plan */
   --color-bg-card: #18191c;
   --color-text: #e2e6ef;
   --color-heading: #6bb5ff;
