@@ -1,72 +1,105 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
+const { Pool } = require("pg");
+const Redis = require("ioredis");
 const axios = require("axios");
 const cookieParser = require("cookie-parser");
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
 const app = express();
-const db = new sqlite3.Database("./visitors.db");
 
-db.run(`CREATE TABLE IF NOT EXISTS visitors (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  ip TEXT,
-  user_agent TEXT,
-  page TEXT,
-  referrer TEXT,
-  visit_time DATETIME DEFAULT CURRENT_TIMESTAMP,
-  country TEXT,
-  city TEXT,
-  timezone TEXT,
-  language TEXT,
-  screen_resolution TEXT,
-  is_returning INTEGER DEFAULT 0
-)`);
+const pgPool = new Pool({ connectionString: process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/analytics" });
+const redis = new Redis(process.env.REDIS_URL || "redis://localhost:6379");
 
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
 
-app.post("/api/track", async (req, res) => {
+// Middleware: Rate limiting (100 req/ip/15min)
+app.use(async (req, res, next) => {
   const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.connection.remoteAddress;
-  const userAgent = req.body.userAgent || "";
-  const page = req.body.page || "";
-  const referrer = req.body.referrer || "";
-  const language = req.body.language || "";
-  const timezone = req.body.timezone || "";
-  const screenResolution = req.body.screenResolution || "";
-  let isReturning = req.cookies.visitor_id ? 1 : 0;
-
-  let country = "", city = "", geoTimezone = "";
-  try {
-    // IP-to-location (free plan, rate limits, demo: ipapi.co)
-    const geo = await axios.get(`https://ipapi.co/${ip}/json/`);
-    country = geo.data.country_name || "";
-    city = geo.data.city || "";
-    geoTimezone = geo.data.timezone || "";
-  } catch (e) {}
-
-  db.run(
-    `INSERT INTO visitors
-    (ip, user_agent, page, referrer, country, city, timezone, language, screen_resolution, is_returning)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [ip, userAgent, page, referrer, country, city, geoTimezone, language, screenResolution, isReturning],
-    (err) => {
-      if (err) return res.status(500).json({ status: "error" });
-      // Set returning visitor cookie for 6 months
-      if (!req.cookies.visitor_id) {
-        res.cookie("visitor_id", Math.random().toString(36).substring(2,15), { maxAge: 15768000000, httpOnly: false });
-      }
-      res.json({ status: "ok" });
-    }
-  );
+  const key = `ratelimit:${ip}`;
+  const count = await redis.incr(key);
+  if (count === 1) await redis.expire(key, 900);
+  if (count > 100) return res.status(429).send("Rate limit exceeded");
+  next();
 });
 
-// Ziyaretçi verilerine erişmek için:
-app.get("/api/visitors", (req, res) => {
-  db.all("SELECT * FROM visitors ORDER BY visit_time DESC LIMIT 100", [], (err, rows) => {
-    if (err) return res.status(500).json({ status: "error" });
-    res.json(rows);
-  });
+// GDPR Logging
+function gdprLog(msg) {
+  fs.appendFileSync("gdpr.log", `[${new Date().toISOString()}] ${msg}\n`);
+}
+
+// Visitor tracking endpoint
+app.post("/api/track", async (req, res) => {
+  try {
+    const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.connection.remoteAddress;
+    const userAgent = req.body.userAgent || "";
+    const page = req.body.page || "";
+    const referrer = req.body.referrer || "";
+    const language = req.body.language || "";
+    const timezone = req.body.timezone || "";
+    const screenResolution = req.body.screenResolution || "";
+    const fingerprint = req.body.fingerprint || "";
+    const consent = !!req.body.consent;
+    let sessionId = req.cookies.session_id || uuidv4();
+
+    // GeoIP Lookup (ipapi.co)
+    let country = "", city = "", geoTimezone = "";
+    try {
+      const geo = await axios.get(`https://ipapi.co/${ip}/json/`);
+      country = geo.data.country_name || "";
+      city = geo.data.city || "";
+      geoTimezone = geo.data.timezone || "";
+    } catch (e) {}
+
+    // Is returning visitor?
+    const { rows: returningRows } = await pgPool.query(
+      "SELECT id FROM visitors WHERE fingerprint = $1 OR session_id = $2 LIMIT 1",
+      [fingerprint, sessionId]
+    );
+    const isReturning = returningRows.length > 0;
+
+    // Insert visitor
+    const { rows } = await pgPool.query(
+      `INSERT INTO visitors
+      (session_id, fingerprint, ip, user_agent, page, referrer, country, city, timezone, language, screen_resolution, is_returning, consent)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING id`,
+      [sessionId, fingerprint, ip, userAgent, page, referrer, country, city, geoTimezone, language, screenResolution, isReturning, consent]
+    );
+    res.cookie("session_id", sessionId, { maxAge: 1000 * 60 * 60 * 24 * 180 });
+
+    // GDPR log
+    gdprLog(`VISIT: ip=${ip} session_id=${sessionId} consent=${consent}`);
+
+    res.json({ status: "ok", visitorId: rows[0].id });
+  } catch (e) {
+    res.status(500).json({ status: "error" });
+  }
+});
+
+// Event logging endpoint (async queue simulation)
+app.post("/api/event", async (req, res) => {
+  try {
+    const { visitorId, eventType, eventData } = req.body;
+    await pgPool.query(
+      "INSERT INTO visitor_events (visitor_id, event_type, event_data) VALUES ($1, $2, $3)",
+      [visitorId, eventType, eventData]
+    );
+    res.json({ status: "ok" });
+  } catch (e) {
+    res.status(500).json({ status: "error" });
+  }
+});
+
+// GDPR: data deletion endpoint
+app.post("/api/delete", async (req, res) => {
+  const { fingerprint, sessionId } = req.body;
+  await pgPool.query("DELETE FROM visitor_events WHERE visitor_id IN (SELECT id FROM visitors WHERE fingerprint=$1 OR session_id=$2)", [fingerprint, sessionId]);
+  await pgPool.query("DELETE FROM visitors WHERE fingerprint=$1 OR session_id=$2", [fingerprint, sessionId]);
+  gdprLog(`DELETE REQUEST: fingerprint=${fingerprint} session_id=${sessionId}`);
+  res.json({ status: "deleted" });
 });
 
 app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
+  console.log("Server running at http://localhost:3000");
 });
