@@ -21,12 +21,97 @@
   <canvas id="weather-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
   <header>
     <div class="title">Synapsion Energie Group</div>
-    <nav>
-      <a href="index.html" class="active">Accueil</a>
-      <a href="services.html">Services</a>
-      <a href="apropos.html">À propos</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+   <!-- Menü Butonu ve Menü Alanı -->
+<style>
+/* Basit responsive hamburger menü */
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 2.2em;
+  padding: 7px 12px;
+  cursor: pointer;
+  color: #2d3a4e;
+  display: flex;
+  align-items: center;
+  z-index: 20;
+}
+nav.menu-nav {
+  display: none;
+  flex-direction: column;
+  background: #f6f7fa;
+  position: absolute;
+  top: 56px;
+  right: 36px;
+  min-width: 170px;
+  box-shadow: 0 4px 18px #0001;
+  border-radius: 14px;
+  padding: 14px 0;
+  z-index: 19;
+}
+nav.menu-nav a {
+  color: #2d3a4e;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 28px;
+  display: block;
+  transition: background 0.18s;
+}
+nav.menu-nav a.active,
+nav.menu-nav a:hover {
+  background: #e6eefb;
+  color: #1976d2;
+}
+@media (min-width: 750px) {
+  .menu-btn { display: none; }
+  nav.menu-nav {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    box-shadow: none;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  nav.menu-nav a { padding: 0 16px; }
+}
+</style>
+<div style="position:relative;">
+  <button class="menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+    ☰
+  </button>
+  <nav class="menu-nav" id="main-menu">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="services.html">Services</a>
+    <a href="apropos.html">À propos</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div>
+<script>
+const btn = document.getElementById('menu-toggle');
+const nav = document.getElementById('main-menu');
+btn.onclick = function() {
+  const shown = nav.style.display === "flex";
+  nav.style.display = shown ? "none" : "flex";
+  btn.setAttribute("aria-expanded", !shown);
+};
+// Menü dışında tıklanınca kapat
+document.addEventListener('click', function(e) {
+  if (!btn.contains(e.target) && !nav.contains(e.target) && window.innerWidth<750) {
+    nav.style.display = "none";
+    btn.setAttribute("aria-expanded", false);
+  }
+});
+window.addEventListener('resize', function() {
+  if(window.innerWidth>=750){
+    nav.style.display = "flex";
+    btn.setAttribute("aria-expanded", true);
+  } else {
+    nav.style.display = "none";
+    btn.setAttribute("aria-expanded", false);
+  }
+});
+</script>
   </header>
   <!-- ...Mevcut kodların başı... -->
 <main>
