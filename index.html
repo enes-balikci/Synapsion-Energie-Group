@@ -2,255 +2,318 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Accueil | Synapsion Energie Group</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root {
-      --bg: #000;
-      --header: #001F54;
-      --text: #fff;
-      --radius: 20px;
-      --transition: 0.5s cubic-bezier(.68,-0.55,.27,1.55);
-    }
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-      font-size: 18px;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    header {
-      background: var(--bg);
-      padding: 24px 0 0 0;
-      text-align: center;
-    }
-    .title {
-      color: var(--header);
-      font-size: 2.6em;
-      letter-spacing: 2px;
-      font-weight: bold;
-      margin-bottom: 0.2em;
-      text-shadow: 0 4px 10px #001F5477;
-      transition: color var(--transition);
-      animation: title-appear 1.2s cubic-bezier(.68,-0.55,.27,1.55);
-    }
-    @keyframes title-appear {
-      from {opacity: 0; transform: translateY(-40px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-    nav {
-      margin: 32px 0 0 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      animation: nav-fade 1.4s 0.4s backwards;
-    }
-    @keyframes nav-fade {
-      from {opacity: 0; transform: scale(0.9);}
-      to {opacity: 1; transform: scale(1);}
-    }
-    nav a {
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 500;
-      padding: 10px 34px;
-      border-radius: var(--radius);
-      font-size: 1.1em;
-      background: linear-gradient(90deg, #001F54 0%, #000c3f 100%);
-      box-shadow: 0 4px 14px #001F5444, 0 1.5px 0 #fff2 inset;
-      margin: 0 2px;
-      transition: background 0.5s, color 0.35s, transform 0.2s;
-      position: relative;
+      background: #000;
       overflow: hidden;
-      outline: none;
-      border: none;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      color: #fff;
+      box-sizing: border-box;
     }
-    nav a.active,
-    nav a:focus,
-    nav a:hover {
-      color: #ffd700;
-      background: linear-gradient(90deg, #003EA8 0%, #001F54 100%);
-      transform: scale(1.07);
-      box-shadow: 0 8px 24px #003EA877;
+    body {
+      min-height: 100vh;
     }
-    main {
+    #bg-webgl {
+      position: fixed;
+      z-index: 0;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      padding: 0 0 40px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 60vh;
-      justify-content: center;
-      margin: 0;
-      padding: 0;
-      animation: main-fade 1.6s 0.6s backwards;
+      justify-content: flex-start;
     }
-    @keyframes main-fade {
-      from {opacity:0; transform: translateY(40px);}
-      to {opacity:1; transform: translateY(0);}
+    header {
+      width: 100%;
+      text-align: center;
+      margin-top: 60px;
+      margin-bottom: 48px;
+      animation: fadein 2s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    .title {
+      color: #001F54;
+      font-size: 2.8em;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-shadow: 0 4px 48px #003ea8cc;
+      margin-bottom: 0.1em;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      gap: 36px;
+      justify-content: center;
+      margin: 48px 0 0 0;
+      z-index: 2;
+    }
+    .nav-btn {
+      position: relative;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+      background: none;
+      border: none;
+      outline: none;
+      min-width: 160px;
+      height: 48px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      font-size: 1.18em;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 8px #001F5488;
+      letter-spacing: 1.2px;
+      transition: color 0.3s;
+      vertical-align: middle;
+    }
+    .nav-btn.active, .nav-btn:hover, .nav-btn:focus {
+      color: #ffd700;
+      outline: none;
+    }
+    .nav-btn .nav-label {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 3;
+      width: 100%;
+      height: 100%;
+      font-family: inherit;
+    }
+    .nav-btn canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      border-radius: 16px;
+      background: none;
+    }
+    main {
+      width: 100%;
+      margin-top: 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+      position: relative;
     }
     .hero {
-      margin-top: 60px;
-      max-width: 600px;
-      background: rgba(0,31,84,0.09);
-      padding: 38px 32px;
-      border-radius: var(--radius);
-      box-shadow: 0 8px 40px #001F5433;
+      background: rgba(0,31,84,0.12);
+      border-radius: 28px;
+      padding: 56px 30px 40px 30px;
+      box-shadow: 0 12px 48px #003ea82f;
+      max-width: 650px;
+      margin: 0 auto;
       text-align: center;
-      overflow: hidden;
-      animation: hero-glow 2s infinite alternate ease-in-out;
+      animation: floatIn 2s cubic-bezier(.68,-0.55,.27,1.55);
     }
-    @keyframes hero-glow {
-      0% { box-shadow: 0 8px 40px #001F5422; }
-      100% { box-shadow: 0 8px 70px #003EA855; }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(90px) scale(0.93);}
+      to   { opacity: 1; transform: translateY(0) scale(1);}
     }
     .hero h1 {
-      color: var(--header);
-      margin: 0 0 10px 0;
-      font-size: 2em;
-      letter-spacing: 1px;
+      color: #001F54;
+      font-size: 2.2em;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 16px #00278077;
       font-weight: bold;
-      transition: color var(--transition);
+      letter-spacing: .5px;
     }
     .hero p {
-      color: var(--text);
-      font-size: 1.1em;
-      margin: 0 0 24px 0;
+      color: #fff;
+      font-size: 1.13em;
       line-height: 1.7;
-      text-shadow: 0 1px 10px #000c;
-      animation: fadein 1.2s 1.0s backwards;
+      margin-bottom: 32px;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #aaa;
+      font-size: 1em;
+      letter-spacing: 1.2px;
+      border-top: 1.5px solid #001F54;
+      margin-top: 80px;
+      padding: 40px 0 16px 0;
+      z-index: 2;
+      background: transparent;
+      animation: fadein 2s 1.2s backwards;
     }
     @keyframes fadein {
       from {opacity: 0;}
       to {opacity: 1;}
     }
-    .gl-btn {
-      display: inline-block;
-      width: 180px;
-      height: 48px;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      margin-top: 36px;
-      outline: none;
-    }
-    #webgl-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      border-radius: 12px;
-      background: none;
-      pointer-events: none;
-      position: absolute;
-      left: 0; top: 0;
-    }
-    .gl-btn-wrap {
-      position: relative;
-      display: inline-block;
-      width: 180px;
-      height: 48px;
-      border-radius: 12px;
-      overflow: visible;
-      margin-bottom: 10px;
-    }
-    .gl-btn-label {
-      position: absolute;
-      left: 0; right: 0; top: 0; bottom: 0;
-      text-align: center;
-      line-height: 48px;
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.08em;
-      letter-spacing: 0.5px;
-      z-index: 2;
-      pointer-events: none;
-      text-shadow: 0 3px 16px #001F54bb;
-      transition: color 0.4s;
-    }
-    .gl-btn:active ~ .gl-btn-label {
-      color: #ffd700;
-    }
-    footer {
-      width: 100%;
-      min-height: 70px;
-      color: #888;
-      background: #000;
-      text-align: center;
-      padding: 40px 0 16px 0;
-      font-size: 1em;
-      letter-spacing: 1.2px;
-      border-top: 1.5px solid #001F54;
-      margin-top: 80px;
-      animation: fadein 2s 1.2s backwards;
-    }
-    @media (max-width: 767px) {
-      nav { gap: 17px; }
+    @media (max-width: 700px) {
+      .hero {padding: 24px 4vw;}
+      nav { gap: 14px; }
       .title { font-size: 2em; }
-      .hero { padding: 24px 7px; margin-top: 32px; }
-      .gl-btn-wrap, .gl-btn { width: 96vw; max-width: 200px;}
+      .nav-btn, .nav-btn .nav-label { font-size: 1em; min-width: 110px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="title">Synapsion Energie Group</div>
-    <nav>
-      <a href="index.html" class="active">Accueil</a>
-      <a href="services.html">Services</a>
-      <a href="apropos.html">À propos</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
-  <main>
-    <section class="hero">
-      <h1>Votre énergie, notre mission</h1>
-      <p>
-        Synapsion Energie Group est un fournisseur innovant et durable d’électricité basé en France.<br>
-        Nous offrons des solutions adaptées à vos besoins en énergie, avec engagement et transparence.
-      </p>
-      <div class="gl-btn-wrap">
-        <button class="gl-btn" onclick="window.location='contact.html';"></button>
-        <span class="gl-btn-label">Nous contacter</span>
-        <canvas id="webgl-canvas"></canvas>
-      </div>
-    </section>
-  </main>
-  <footer>
-    © 2025 Synapsion Energie Group — Tous droits réservés.
-  </footer>
-  <!-- Three.js CDN -->
+  <canvas id="bg-webgl"></canvas>
+  <div class="container">
+    <header>
+      <div class="title">Synapsion Energie Group</div>
+      <nav id="nav">
+        <!-- Nav buttons will be injected here -->
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <h1>Votre énergie, notre mission</h1>
+        <p>
+          Synapsion Energie Group est un fournisseur innovant et durable d’électricité basé en France.<br>
+          Nous offrons des solutions adaptées à vos besoins en énergie, avec engagement et transparence.
+        </p>
+      </section>
+    </main>
+    <footer>
+      © 2025 Synapsion Energie Group — Tous droits réservés.
+    </footer>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script id="particles-vertex" type="x-shader/x-vertex">
+    uniform float uTime;
+    varying vec3 vColor;
+    void main() {
+      vColor = color.rgb;
+      float t = uTime * 0.15;
+      vec3 pos = position;
+      pos.x += sin(pos.y*0.09 + t) * 16.0;
+      pos.y += cos(pos.x*0.12 + t) * 11.0;
+      pos.z += sin(pos.x*0.11 + t) * 6.0;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+      gl_PointSize = 2.5 + 2.5 * sin(uTime*0.6 + position.x*0.3 + position.y*0.11);
+    }
+  </script>
+  <script id="particles-fragment" type="x-shader/x-fragment">
+    varying vec3 vColor;
+    void main() {
+      float d = length(gl_PointCoord - vec2(0.5));
+      if(d > 0.5) discard;
+      gl_FragColor = vec4(vColor, 0.88 - d*0.6);
+    }
+  </script>
   <script>
-  // WebGL button background effect
-  const canvas = document.getElementById('webgl-canvas');
-  if(canvas) {
-    canvas.width=180; canvas.height=48;
-    let renderer = new THREE.WebGLRenderer({canvas, alpha: true});
-    renderer.setClearColor(0x000000, 0);
+    // ==================== Background WebGL Particle System ====================
+    const bgCanvas = document.getElementById('bg-webgl');
+    let renderer = new THREE.WebGLRenderer({canvas: bgCanvas, alpha: true});
     let scene = new THREE.Scene();
-    let camera = new THREE.PerspectiveCamera(75, 180/48, 0.1, 1000);
-    camera.position.z = 75;
-
-    let geometry = new THREE.TorusGeometry(25, 10, 15, 100);
-    let material = new THREE.MeshStandardMaterial({color: 0x001F54, metalness: 0.7, roughness: 0.08, emissive: 0x003EA8, emissiveIntensity: 0.11});
-    let torus = new THREE.Mesh(geometry, material);
-    scene.add(torus);
-
-    let pointLight = new THREE.PointLight(0xffffff, 2, 200);
-    pointLight.position.set(40, 20, 50);
-    scene.add(pointLight);
-
-    let animate = function() {
-      torus.rotation.x += 0.012;
-      torus.rotation.y += 0.018;
-      renderer.render(scene, camera);
+    let camera = new THREE.PerspectiveCamera(80, window.innerWidth/window.innerHeight, 1, 2000);
+    camera.position.z = 420;
+    let geometry = new THREE.BufferGeometry();
+    let count = 1800;
+    let positions = new Float32Array(count * 3);
+    let colors = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      positions[i*3] = (Math.random()-0.5)*700;
+      positions[i*3+1] = (Math.random()-0.5)*500;
+      positions[i*3+2] = (Math.random()-0.5)*1000;
+      let c = i%3==0 ? 0.45 : 0.12 + Math.random()*0.3;
+      colors[i*3] = 0.0 + Math.random()*0.08 + c;
+      colors[i*3+1] = 0.12 + Math.random()*0.38 + c*0.4;
+      colors[i*3+2] = 0.6 + Math.random()*0.35;
+    }
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    let material = new THREE.PointsMaterial({size:2, vertexColors:true});
+    // Shader Material for advanced animation
+    let uniforms = { uTime: { value: 0 } };
+    let shaderMat = new THREE.ShaderMaterial({
+      uniforms,
+      vertexShader: document.getElementById('particles-vertex').textContent,
+      fragmentShader: document.getElementById('particles-fragment').textContent,
+      vertexColors: true,
+      transparent: true
+    });
+    let particles = new THREE.Points(geometry, shaderMat);
+    scene.add(particles);
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+    }
+    window.addEventListener('resize', onResize);
+    onResize();
+    let t0 = performance.now();
+    function animate() {
       requestAnimationFrame(animate);
-    };
+      uniforms.uTime.value = (performance.now() - t0) * 0.001;
+      renderer.render(scene, camera);
+    }
     animate();
-  }
+    // ==================== Navigation WebGL Buttons ====================
+    const navData = [
+      { label: 'Accueil', href: 'index.html' },
+      { label: 'Services', href: 'services.html' },
+      { label: 'À propos', href: 'apropos.html' },
+      { label: 'Contact', href: 'contact.html' }
+    ];
+    const nav = document.getElementById('nav');
+    const page = location.pathname.split('/').pop() || 'index.html';
+    navData.forEach(navItem => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'nav-btn' + (page === navItem.href ? ' active' : '');
+      btn.onclick = () => { if(location.pathname !== '/' + navItem.href) window.location = navItem.href; };
+      // label
+      const span = document.createElement('span');
+      span.className = 'nav-label';
+      span.innerText = navItem.label;
+      btn.appendChild(span);
+      // canvas for button effect
+      const c = document.createElement('canvas');
+      c.width = 180; c.height = 48;
+      btn.appendChild(c);
+      nav.appendChild(btn);
+      // WebGL effect for the button
+      const ctx = c.getContext('2d');
+      let glow = 0;
+      let hover = false, active = btn.classList.contains('active');
+      btn.addEventListener('mouseenter', ()=>{ hover=true; });
+      btn.addEventListener('mouseleave', ()=>{ hover=false; });
+      function renderBtn() {
+        ctx.clearRect(0,0,c.width,c.height);
+        glow += ( (hover||active) ? 1 : 0 - glow ) * 0.07;
+        // gradient border
+        let g = ctx.createLinearGradient(0,0,c.width,c.height);
+        g.addColorStop(0, "#003EA8");
+        g.addColorStop(1, "#001F54");
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 3.5 + glow*2;
+        ctx.shadowBlur = 12 + 18*glow;
+        ctx.shadowColor = "#00b0ffbb";
+        ctx.strokeRect(7+glow, 7+glow, c.width-14-glow*2, c.height-14-glow*2);
+        // animated background
+        let bgGrad = ctx.createLinearGradient(0,0,c.width,0);
+        bgGrad.addColorStop(0, hover||active ? "#003EA8cc" : "#001F5470");
+        bgGrad.addColorStop(1, hover||active ? "#001F54cc" : "#003ea840");
+        ctx.fillStyle = bgGrad;
+        ctx.globalAlpha = 0.82 + 0.18*Math.sin(performance.now()/400+Math.random());
+        ctx.fillRect(10+glow, 10+glow, c.width-20-glow*2, c.height-20-glow*2);
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(renderBtn);
+      }
+      renderBtn();
+    });
   </script>
 </body>
 </html>
