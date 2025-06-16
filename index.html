@@ -4,88 +4,44 @@
   <meta charset="UTF-8">
   <title>Index des fichiers du projet | Synapsion Energie Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-    }
-    header {
-      text-align: center;
-      margin-top: 48px;
-      margin-bottom: 36px;
-    }
-    .title {
-      color: #001F54;
-      font-size: 2.4em;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-      text-shadow: 0 4px 32px #003ea877;
-      user-select: none;
-    }
-    main {
-      max-width: 650px;
-      margin: 0 auto;
-      background: rgba(0,31,84,0.08);
-      border-radius: 24px;
-      box-shadow: 0 8px 40px #003ea822;
-      padding: 36px 18px;
-      animation: fadein 1.4s cubic-bezier(.68,-0.55,.27,1.55);
-    }
-    h2 {
-      color: #001F54;
-      margin-bottom: 16px;
-      font-size: 1.3em;
-      font-weight: 600;
-    }
-    ul.file-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px 24px;
-    }
-    ul.file-list li {
+    .weather-widget {
       background: rgba(0,31,84,0.13);
       border-radius: 14px;
-      padding: 14px 18px;
-      margin: 0;
-      transition: background 0.3s;
-      word-break: break-all;
-    }
-    ul.file-list li:hover {
-      background: #001F54cc;
-    }
-    ul.file-list a {
+      padding: 18px 24px;
+      margin: 30px auto 0 auto;
+      max-width: 360px;
       color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.08em;
-      transition: color 0.2s;
-      display: inline-block;
-      width: 100%;
-    }
-    ul.file-list a:hover {
-      color: #ffd700;
-      text-decoration: underline;
-    }
-    footer {
-      margin-top: 60px;
       text-align: center;
-      color: #aaa;
-      font-size: 1em;
-      letter-spacing: 1px;
-      border-top: 1.5px solid #001F54;
-      padding: 30px 0 16px 0;
+      box-shadow: 0 4px 32px #003ea822;
+      font-size: 1.15em;
+      min-height: 80px;
+      transition: background 0.2s;
     }
-    @media (max-width: 600px) {
-      main { padding: 16px 2vw; }
-      ul.file-list { grid-template-columns: 1fr; }
+    .weather-widget .city {
+      font-size: 1.12em;
+      color: #ffd700;
+      font-weight: bold;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .weather-widget .desc {
+      font-size: 0.98em;
+      color: #eee;
+      margin-bottom: 4px;
+    }
+    .weather-widget .temp {
+      font-size: 1.38em;
+      margin-bottom: 8px;
+      color: #fff;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .weather-widget .icon {
+      width: 46px;
+      vertical-align: middle;
+      margin-bottom: 6px;
     }
   </style>
 </head>
@@ -113,9 +69,69 @@
       <li><a href="visitor-analytics.js" target="_blank">visitor-analytics.js</a></li>
       <li><a href="webgl-button.js" target="_blank">webgl-button.js</a></li>
     </ul>
+    <section class="weather-widget" id="weather-widget">
+      Chargement de la météo...
+    </section>
   </main>
   <footer>
     © 2025 Synapsion Energie Group — Tous droits réservés.
   </footer>
+  <script>
+    // Hava durumu API entegrasyonu (Open-Meteo, API key gerekmez)
+    // Paris örnek: lat=48.8566, lon=2.3522
+    const cityName = "Paris";
+    const lat = 48.8566;
+    const lon = 2.3522;
+    const widget = document.getElementById('weather-widget');
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe%2FParis`)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.current_weather) {
+          widget.innerHTML = "Impossible d'obtenir les données météo.";
+          return;
+        }
+        const weather = data.current_weather;
+        // Sıcaklık ve hava durumu kodunu işle
+        const temp = Math.round(weather.temperature);
+        const desc = getWeatherDesc(weather.weathercode);
+        const icon = getWeatherIcon(weather.weathercode);
+        widget.innerHTML = `
+          <div class="city">${cityName}</div>
+          <div class="temp">${temp}&deg;C <img class="icon" src="${icon}" alt=""></div>
+          <div class="desc">${desc}</div>
+        `;
+      })
+      .catch(() => {
+        widget.innerHTML = "La météo n'a pas pu être chargée.";
+      });
+
+    // Open-Meteo weather codes için açıklamalar (Fransızca)
+    function getWeatherDesc(code) {
+      switch (code) {
+        case 0: return "Ciel dégagé";
+        case 1: case 2: case 3: return "Partiellement nuageux";
+        case 45: case 48: return "Brouillard";
+        case 51: case 53: case 55: return "Bruine";
+        case 61: case 63: case 65: return "Pluie";
+        case 71: case 73: case 75: return "Chute de neige";
+        case 80: case 81: case 82: return "Averses";
+        case 95: return "Orage";
+        default: return "Conditions inconnues";
+      }
+    }
+    // Basit hava durumu ikonları (ücretsiz ikonlar, PNG)
+    function getWeatherIcon(code) {
+      // PNG ikonları: https://basmilius.github.io/weather-icons/
+      if (code === 0) return "https://basmilius.github.io/weather-icons/production/fill/all/clear-day.svg";
+      if ([1,2,3].includes(code)) return "https://basmilius.github.io/weather-icons/production/fill/all/partly-cloudy-day.svg";
+      if ([45,48].includes(code)) return "https://basmilius.github.io/weather-icons/production/fill/all/fog.svg";
+      if ([51,53,55].includes(code)) return "https://basmilius.github.io/weather-icons/production/fill/all/drizzle.svg";
+      if ([61,63,65].includes(code)) return "https://basmilius.github.io/weather-icons/production/fill/all/rain.svg";
+      if ([71,73,75].includes(code)) return "https://basmilius.github.io/weather-icons/production/fill/all/snow.svg";
+      if ([80,81,82].includes(code)) return "https://basmilius.github.io/weather-icons/production/fill/all/showers.svg";
+      if (code === 95) return "https://basmilius.github.io/weather-icons/production/fill/all/thunderstorms.svg";
+      return "https://basmilius.github.io/weather-icons/production/fill/all/cloudy.svg";
+    }
+  </script>
 </body>
 </html>
