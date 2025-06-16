@@ -13,11 +13,11 @@
     const btn = document.getElementById('theme-toggle-btn');
     if (!btn) return;
     if (theme === 'dark') {
-      btn.innerHTML = '☀️';
+      btn.innerHTML = '1';
       btn.title = 'Mode clair';
       btn.setAttribute('aria-label', 'Mode clair');
     } else {
-      btn.innerHTML = '🌙';
+      btn.innerHTML = '2';
       btn.title = 'Mode sombre';
       btn.setAttribute('aria-label', 'Mode sombre');
     }
