@@ -17,6 +17,29 @@
       <a href="contact.html">İletişim</a>
     </nav>
   </header>
+  <!-- ...Mevcut kodların başı... -->
+<main>
+  <!-- Eski içeriklerin üstünde/fransızca olarak -->
+  <section id="reseau-electricite" style="margin-bottom:48px;">
+    <h2>Électricité en France</h2>
+    <p>
+      Découvrez toutes les entreprises françaises du secteur de l’électricité. Cliquez sur une entreprise pour voir ses détails, son activité, et ses coordonnées officielles extraites de l’INPI.
+    </p>
+    <div id="webgl-electric-network" style="width:100%;height:400px;margin:24px 0 40px 0;border-radius:18px;overflow:hidden;box-shadow:0 4px 32px #0071e31c;"></div>
+    <div>
+      <input type="text" id="electricite-search" placeholder="Rechercher une entreprise..." style="padding:12px 18px;font-size:1.08em;border-radius:11px;border:1px solid #d3d7de;width:350px;max-width:90%;margin-bottom:18px;">
+    </div>
+    <div id="electricite-list" style="margin:0 auto;max-width:920px;"></div>
+    <div id="electricite-details" style="display:none;margin:24px auto 0 auto;max-width:670px;" class="electricite-details-box"></div>
+  </section>
+  <!-- ...Mevcut kodlarının geri kalanı... -->
+</main>
+<!-- ... -->
+<!-- Sayfanın sonunda, </body> öncesi: Three.js, animasyon ve şirket API kodları -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="webgl-electricite.js"></script>
+<script src="api-electricite.js"></script>
   <main>
     <h2>Hoşgeldiniz</h2>
     <p>Güncel hava durumuna göre ultra gerçekçi animasyonlu arka plan ile!</p>
