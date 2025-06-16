@@ -2,40 +2,24 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact | Synapsion Energie Group</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
   <style>
-    /* ... yukarıdaki style bloğu aynen buraya kopyalanmalı ... */
-    .form-group {margin-bottom: 16px;}
-    .contact-form {
-      margin-top: 36px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
-      background: rgba(0,31,84,0.09);
-      padding: 32px 18px;
-      border-radius: 20px;
-      box-shadow: 0 8px 40px #001F5433;
-      max-width: 420px;
-      margin-left: auto; margin-right: auto;
-      animation: fadein 2s 1.1s backwards;
-    }
-    .contact-form input, .contact-form textarea {
-      width: 100%;
-      font-size: 1em;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      margin-bottom: 6px;
-      background: #000c;
-      color: #fff;
-      transition: background 0.5s;
-      box-shadow: 0 1px 8px #001F5455;
-    }
+    body { background: #000; color: #fff; font-family: 'Segoe UI', 'Roboto', Arial, sans-serif; margin: 0; min-height: 100vh; }
+    .title { color: #001F54; font-size: 2.4em; font-weight: bold; letter-spacing: 2px; margin: 32px 0 10px 0; text-align: center; }
+    nav { display: flex; justify-content: center; gap: 36px; margin-bottom: 32px; }
+    nav a { text-decoration: none; color: #fff; font-weight: 500; padding: 10px 34px; border-radius: 16px; font-size: 1.1em; background: linear-gradient(90deg, #001F54 0%, #000c3f 100%); margin: 0 2px; transition: background 0.5s, color 0.35s, transform 0.2s;}
+    nav a.active, nav a:hover { color: #ffd700; background: linear-gradient(90deg, #003EA8 0%, #001F54 100%); transform: scale(1.07);}
+    main { max-width: 650px; margin: 0 auto; background: rgba(0,31,84,0.08); border-radius: 24px; box-shadow: 0 8px 40px #003ea822; padding: 36px 18px; text-align: center;}
+    h2 { color: #001F54; margin-bottom: 16px; }
+    .contact-form { margin-top: 20px; background: rgba(0,31,84,0.13); border-radius: 14px; padding: 24px 18px; display: flex; flex-direction: column; gap: 12px; align-items: center;}
+    .contact-form input, .contact-form textarea { width: 96%; font-size: 1em; padding: 10px 12px; border-radius: 10px; border: none; outline: none; background: #000c; color: #fff; box-shadow: 0 1px 8px #001F5455;}
     .contact-form textarea {min-height: 80px; resize: vertical;}
-    .contact-form .gl-btn-wrap {margin-top: 16px;}
+    .contact-form button { margin-top: 20px; padding: 10px 32px; background: #001F54; color: #fff; border: none; border-radius: 10px; font-size: 1em; font-weight: bold; cursor: pointer; transition: background 0.3s;}
+    .contact-form button:hover { background: #003EA8;}
+    footer { margin-top: 40px; text-align: center; color: #aaa; font-size: 1em; letter-spacing: 1px; border-top: 1.5px solid #001F54; padding: 30px 0 16px 0;}
+    @media (max-width: 600px) { main { padding: 16px 2vw; } nav { gap: 12px; flex-wrap: wrap; } nav a { font-size: 1em; padding: 9px 10px; } }
   </style>
 </head>
 <body>
@@ -49,68 +33,16 @@
     </nav>
   </header>
   <main>
-    <section class="hero">
-      <h1>Contactez-nous</h1>
-      <p>
-        Pour toute question ou demande, veuillez remplir le formulaire ci-dessous.<br>
-        Notre équipe vous répondra dans les meilleurs délais.
-      </p>
-      <form class="contact-form" autocomplete="off">
-        <div class="form-group">
-          <input type="text" name="nom" placeholder="Votre nom" required>
-        </div>
-        <div class="form-group">
-          <input type="email" name="email" placeholder="Votre e-mail" required>
-        </div>
-        <div class="form-group">
-          <textarea name="message" placeholder="Votre message" required></textarea>
-        </div>
-        <div class="gl-btn-wrap">
-          <button type="submit" class="gl-btn"></button>
-          <span class="gl-btn-label">Envoyer</span>
-          <canvas id="webgl-canvas"></canvas>
-        </div>
-      </form>
-    </section>
+    <h2>Contactez-nous</h2>
+    <form class="contact-form" autocomplete="off" onsubmit="event.preventDefault();alert('Message envoyé!');this.reset();">
+      <input type="text" name="nom" placeholder="Votre nom" required>
+      <input type="email" name="email" placeholder="Votre e-mail" required>
+      <textarea name="message" placeholder="Votre message" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
   </main>
   <footer>
     © 2025 Synapsion Energie Group — Tous droits réservés.
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-  <script>
-    // ... WebGL kodu yukarıdakiyle aynı ...
-    const canvas = document.getElementById('webgl-canvas');
-    if(canvas) {
-      canvas.width=180; canvas.height=48;
-      let renderer = new THREE.WebGLRenderer({canvas, alpha: true});
-      renderer.setClearColor(0x000000, 0);
-      let scene = new THREE.Scene();
-      let camera = new THREE.PerspectiveCamera(75, 180/48, 0.1, 1000);
-      camera.position.z = 75;
-
-      let geometry = new THREE.TorusGeometry(25, 10, 15, 100);
-      let material = new THREE.MeshStandardMaterial({color: 0x001F54, metalness: 0.7, roughness: 0.08, emissive: 0x003EA8, emissiveIntensity: 0.11});
-      let torus = new THREE.Mesh(geometry, material);
-      scene.add(torus);
-
-      let pointLight = new THREE.PointLight(0xffffff, 2, 200);
-      pointLight.position.set(40, 20, 50);
-      scene.add(pointLight);
-
-      let animate = function() {
-        torus.rotation.x += 0.012;
-        torus.rotation.y += 0.018;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-      };
-      animate();
-    }
-    // Form submit animasyonu (demo)
-    document.querySelector('.contact-form').addEventListener('submit', function(e){
-      e.preventDefault();
-      alert('Merci pour votre message !');
-      this.reset();
-    });
-  </script>
 </body>
 </html>
