@@ -1,0 +1,54 @@
+<section class="news-section">
+  <h2>Enerji Sektörü Haberleri</h2>
+  <ul id="rss-feed-list">
+    <li>Yükleniyor...</li>
+  </ul>
+</section>
+<script>
+  // RSS Feed adresinizi buraya girin
+  const RSS_URL = "https://www.enerjigunlugu.net/rss.xml"; // Örnek enerji sektörü RSS'i
+
+  fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(RSS_URL))
+    .then(response => response.json())
+    .then(data => {
+      const list = document.getElementById("rss-feed-list");
+      list.innerHTML = "";
+      data.items.slice(0, 5).forEach(item => {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${item.link}" target="_blank" rel="noopener">${item.title}</a>`;
+        list.appendChild(li);
+      });
+    })
+    .catch(() => {
+      document.getElementById("rss-feed-list").innerHTML = "<li>Haberler yüklenemedi.</li>";
+    });
+</script>
+<style>
+.news-section {
+  margin: 32px auto;
+  padding: 20px;
+  background: #232323;
+  border-radius: 10px;
+  max-width: 600px;
+  color: #f5f5f5;
+}
+.news-section h2 {
+  color: #fff176;
+  margin-top: 0;
+}
+.news-section ul {
+  padding: 0;
+  list-style: inside disc;
+}
+.news-section li {
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+.news-section a {
+  color: #00bfae;
+  text-decoration: none;
+}
+.news-section a:hover {
+  text-decoration: underline;
+}
+</style>
