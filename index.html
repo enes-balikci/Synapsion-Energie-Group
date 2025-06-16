@@ -2,213 +2,38 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Synapsion Energie Group</title>
+  <title>Accueil | Synapsion Energie Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <style>
-    #bg-webgl {
-      position: fixed;
-      z-index: 0;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      pointer-events: none;
-    }
-    .container {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header, main, footer { z-index: 2; position: relative; }
-    header { margin-top: 48px; margin-bottom: 36px; text-align: center; }
-    .title { color: #001F54; font-size: 2.4em; font-weight: bold; letter-spacing: 2px; margin-bottom: 12px; text-shadow: 0 4px 32px #003ea877; user-select: none; }
-    main { max-width: 500px; margin: 0 auto; border-radius: 24px; box-shadow: 0 8px 40px #003ea822; padding: 36px 18px; background: rgba(0,31,84,0.08); }
-    footer { margin-top: 60px; text-align: center; color: #aaa; font-size: 1em; letter-spacing: 1px; border-top: 1.5px solid #001F54; padding: 30px 0 16px 0; }
+    body { background: #000; color: #fff; font-family: 'Segoe UI', 'Roboto', Arial, sans-serif; margin: 0; min-height: 100vh; }
+    .title { color: #001F54; font-size: 2.4em; font-weight: bold; letter-spacing: 2px; margin: 32px 0 10px 0; text-align: center; }
+    nav { display: flex; justify-content: center; gap: 36px; margin-bottom: 32px; }
+    nav a { text-decoration: none; color: #fff; font-weight: 500; padding: 10px 34px; border-radius: 16px; font-size: 1.1em; background: linear-gradient(90deg, #001F54 0%, #000c3f 100%); margin: 0 2px; transition: background 0.5s, color 0.35s, transform 0.2s;}
+    nav a.active, nav a:hover { color: #ffd700; background: linear-gradient(90deg, #003EA8 0%, #001F54 100%); transform: scale(1.07);}
+    main { max-width: 650px; margin: 0 auto; background: rgba(0,31,84,0.08); border-radius: 24px; box-shadow: 0 8px 40px #003ea822; padding: 36px 18px; text-align: center;}
+    h2 { color: #001F54; margin-bottom: 16px; }
+    footer { margin-top: 40px; text-align: center; color: #aaa; font-size: 1em; letter-spacing: 1px; border-top: 1.5px solid #001F54; padding: 30px 0 16px 0;}
+    @media (max-width: 600px) { main { padding: 16px 2vw; } nav { gap: 12px; flex-wrap: wrap; } nav a { font-size: 1em; padding: 9px 10px; } }
   </style>
 </head>
 <body>
-  <canvas id="bg-webgl"></canvas>
-  <div class="container">
-    <header>
-      <div class="title">Synapsion Energie Group</div>
-    </header>
-    <main>
-      <h2>Bienvenue sur notre site</h2>
-      <p>Ce site adapte son ambiance selon la météo actuelle à Paris.</p>
-    </main>
-    <footer>
-      © 2025 Synapsion Energie Group — Tous droits réservés.
-    </footer>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-  <script>
-    // --- Hava durumu kodunu çek ---
-    const lat = 48.8566, lon = 2.3522; // Paris
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe%2FParis`)
-      .then(r => r.json()).then(data => {
-        if (!data.current_weather) return startWebGL("clear");
-        const code = data.current_weather.weathercode;
-        // Kod gruplarına göre animasyon tipi ata
-        if (code === 0) return startWebGL("clear"); // güneşli
-        if ([1,2,3].includes(code)) return startWebGL("cloudy"); // bulutlu
-        if ([45,48].includes(code)) return startWebGL("fog"); // sisli
-        if ([51,53,55,61,63,65,80,81,82].includes(code)) return startWebGL("rain"); // yağmurlu
-        if ([71,73,75,77,85,86].includes(code)) return startWebGL("snow"); // karlı
-        if ([95,96,99].includes(code)) return startWebGL("storm"); // fırtına
-        return startWebGL("cloudy");
-      }).catch(() => startWebGL("clear"));
-
-    // --- WebGL animasyonları ---
-    function startWebGL(type) {
-      const canvas = document.getElementById('bg-webgl');
-      let renderer = new THREE.WebGLRenderer({canvas, alpha:true});
-      let scene = new THREE.Scene();
-      let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 2000);
-      camera.position.z = 420;
-      renderer.setSize(window.innerWidth, window.innerHeight, false);
-
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth/window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight, false);
-      });
-
-      // --- GÜNEŞLİ: Işık döngüsü ve sıcak renk partikülleri ---
-      if(type==="clear") {
-        let particles = [];
-        let geometry = new THREE.BufferGeometry();
-        let count = 900;
-        let positions = new Float32Array(count*3), colors = new Float32Array(count*3);
-        for(let i=0;i<count;i++){
-          positions[i*3]=(Math.random()-0.5)*900;
-          positions[i*3+1]=(Math.random()-0.5)*500;
-          positions[i*3+2]=(Math.random()-0.5)*900;
-          colors[i*3]=1;
-          colors[i*3+1]=0.85+Math.random()*0.12;
-          colors[i*3+2]=0.25+Math.random()*0.13;
-        }
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
-        geometry.setAttribute('color', new THREE.BufferAttribute(colors,3));
-        let mat = new THREE.PointsMaterial({vertexColors:true, size:5, opacity:0.6, transparent:true});
-        let pts = new THREE.Points(geometry,mat);
-        scene.add(pts);
-        let sun = new THREE.PointLight(0xffe066,2,900);
-        sun.position.set(0,80,300);
-        scene.add(sun);
-        function anim(){
-          sun.intensity = 2+Math.sin(Date.now()/900)*0.4;
-          pts.rotation.y += 0.0013;
-          pts.rotation.x += 0.0007;
-          renderer.render(scene,camera);
-          requestAnimationFrame(anim);
-        }
-        anim();
-      }
-      // --- BULUTLU: Hafif dönen gri partiküller ---
-      else if(type==="cloudy"||type==="fog") {
-        let geometry = new THREE.BufferGeometry();
-        let count = 1200;
-        let positions = new Float32Array(count*3), colors = new Float32Array(count*3);
-        for(let i=0;i<count;i++){
-          positions[i*3]=(Math.random()-0.5)*1200;
-          positions[i*3+1]=(Math.random()-0.5)*250;
-          positions[i*3+2]=(Math.random()-0.5)*700;
-          let c=0.6+Math.random()*0.3;
-          colors[i*3]=c; colors[i*3+1]=c; colors[i*3+2]=c;
-        }
-        geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
-        geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
-        let mat = new THREE.PointsMaterial({vertexColors:true, size:18, opacity:0.22, transparent:true});
-        let pts = new THREE.Points(geometry,mat);
-        scene.add(pts);
-        function anim(){
-          pts.rotation.y += 0.0005;
-          pts.rotation.x += 0.00015;
-          renderer.render(scene,camera);
-          requestAnimationFrame(anim);
-        }
-        anim();
-      }
-      // --- YAĞMURLU: Aşağıya inen mavi damlalar ---
-      else if(type==="rain") {
-        let drops=[];
-        let dropCount=400;
-        for(let i=0;i<dropCount;i++){
-          let geo = new THREE.SphereGeometry(1.4,8,8);
-          let mat = new THREE.MeshBasicMaterial({color:0x44b0ff,opacity:0.7,transparent:true});
-          let mesh = new THREE.Mesh(geo,mat);
-          mesh.position.set((Math.random()-0.5)*900,Math.random()*600, (Math.random()-0.5)*400);
-          scene.add(mesh);
-          drops.push(mesh);
-        }
-        function anim(){
-          for(let d of drops){
-            d.position.y -= 8+Math.random()*3;
-            if(d.position.y<-160) d.position.y=400+Math.random()*160;
-          }
-          renderer.render(scene,camera);
-          requestAnimationFrame(anim);
-        }
-        anim();
-      }
-      // --- KARLI: Aşağıya inen beyaz partiküller ---
-      else if(type==="snow") {
-        let snows=[];
-        let snowCount=350;
-        for(let i=0;i<snowCount;i++){
-          let geo = new THREE.SphereGeometry(2.5,8,8);
-          let mat = new THREE.MeshBasicMaterial({color:0xffffff,opacity:0.88,transparent:true});
-          let mesh = new THREE.Mesh(geo,mat);
-          mesh.position.set((Math.random()-0.5)*900,Math.random()*600, (Math.random()-0.5)*400);
-          scene.add(mesh);
-          snows.push(mesh);
-        }
-        function anim(){
-          for(let s of snows){
-            s.position.y -= 2+Math.random()*1.7;
-            s.position.x += Math.sin(Date.now()/700+s.position.y)*0.26;
-            if(s.position.y<-180) s.position.y=400+Math.random()*180;
-          }
-          renderer.render(scene,camera);
-          requestAnimationFrame(anim);
-        }
-        anim();
-      }
-      // --- FIRTINA: Yağmur ve şimşek efekti ---
-      else if(type==="storm") {
-        let drops=[], flashes=0;
-        let dropCount=380;
-        for(let i=0;i<dropCount;i++){
-          let geo = new THREE.SphereGeometry(1.7,8,8);
-          let mat = new THREE.MeshBasicMaterial({color:0x2288ff,opacity:0.8,transparent:true});
-          let mesh = new THREE.Mesh(geo,mat);
-          mesh.position.set((Math.random()-0.5)*900,Math.random()*600, (Math.random()-0.5)*400);
-          scene.add(mesh);
-          drops.push(mesh);
-        }
-        let flash = new THREE.PointLight(0xffffdd,0,1500);
-        scene.add(flash);
-        function anim(){
-          for(let d of drops){
-            d.position.y -= 10+Math.random()*3;
-            if(d.position.y<-160) d.position.y=400+Math.random()*160;
-          }
-          // Şimşek efekti
-          if(Math.random()<0.009) flashes=1+Math.random()*2;
-          if(flashes>0){
-            flash.intensity = 8*flashes;
-            flashes -= 0.18;
-          }else{
-            flash.intensity = 0;
-          }
-          renderer.render(scene,camera);
-          requestAnimationFrame(anim);
-        }
-        anim();
-      }
-    }
-  </script>
+  <header>
+    <div class="title">Synapsion Energie Group</div>
+    <nav>
+      <a href="index.html" class="active">Accueil</a>
+      <a href="services.html">Services</a>
+      <a href="apropos.html">À propos</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Bienvenue sur notre site</h2>
+    <p>Synapsion Energie Group est un fournisseur innovant et durable d’électricité basé en France.<br>
+    Nous offrons des solutions adaptées à vos besoins en énergie, avec engagement et transparence.</p>
+  </main>
+  <footer>
+    © 2025 Synapsion Energie Group — Tous droits réservés.
+  </footer>
 </body>
 </html>
