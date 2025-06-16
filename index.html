@@ -2,135 +2,124 @@
 <html lang="fr">
 <head>
   <title>Synapsion Energie Group | Électricité, Services & Innovation</title>
-<meta name="description" content="Synapsion Energie Group : Solutions innovantes pour l'énergie, l'électricité et la transition énergétique en France. Découvrez nos services et nos partenaires.">
-<meta name="keywords" content="électricité, énergie, France, entreprise, Synapsion, transition énergétique, innovation, services, fournisseur, réseau électrique">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="Synapsion Energie Group | Électricité, Services & Innovation">
-<meta property="og:description" content="Solutions innovantes pour l'énergie. Services, conseils, fournisseurs et entreprises du secteur électrique en France.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://enes-balikci.github.io/Synapsion-Energie-Group/index.html/">
-<meta property="og:image" content="https://votre-domaine.fr/logo.png">
-<link rel="canonical" href="https://enes-balikci.github.io/Synapsion-Energie-Group/index.html/">
+  <meta name="description" content="Synapsion Energie Group : Solutions innovantes pour l'énergie, l'électricité et la transition énergétique en France. Découvrez nos services et nos partenaires.">
+  <meta name="keywords" content="électricité, énergie, France, entreprise, Synapsion, transition énergétique, innovation, services, fournisseur, réseau électrique">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Synapsion Energie Group | Électricité, Services & Innovation">
+  <meta property="og:description" content="Solutions innovantes pour l'énergie. Services, conseils, fournisseurs et entreprises du secteur électrique en France.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://enes-balikci.github.io/Synapsion-Energie-Group/index.html/">
+  <meta property="og:image" content="https://votre-domaine.fr/logo.png">
+  <link rel="canonical" href="https://enes-balikci.github.io/Synapsion-Energie-Group/index.html/">
   <meta charset="UTF-8">
-  <title>Accueil | Synapsion Energie Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <canvas id="weather-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
   <header>
-  <!-- Hamburger Menü Butonu ve Açılır Menü -->
-<style>
-.menu-btn {
-  background: none;
-  border: none;
-  font-size: 2em;
-  padding: 8px 14px;
-  cursor: pointer;
-  color: #2d3a4e;
-  display: flex;
-  align-items: center;
-}
-.menu-nav {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 52px;
-  right: 16px;
-  min-width: 170px;
-  background: #f6f7fa;
-  box-shadow: 0 4px 18px #0001;
-  border-radius: 14px;
-  z-index: 100;
-  padding: 10px 0;
-}
-.menu-nav a {
-  color: #2d3a4e;
-  font-weight: 500;
-  text-decoration: none;
-  padding: 12px 24px;
-  display: block;
-  border-radius: 8px;
-  transition: background 0.16s;
-}
-.menu-nav a:hover {
-  background: #e6eefb;
-  color: #1976d2;
-}
-@media (min-width: 700px) {
-  .menu-btn { display: none; }
-  .menu-nav {
-    display: flex !important;
-    flex-direction: row;
-    position: static;
-    box-shadow: none;
-    background: none;
-    border-radius: 0;
-    padding: 0;
-    min-width: 0;
-  }
-  .menu-nav a { padding: 0 18px; }
-}
-</style>
-<div style="position:relative;">
-  <button class="menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false">
-    ☰ Menu
-  </button>
-  <nav class="menu-nav" id="main-menu">
-    <a href="services.html">Services</a>
-    <a href="apropos.html">À propos</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</div>
-<script>
-const btn = document.getElementById('menu-toggle');
-const nav = document.getElementById('main-menu');
-btn.onclick = function(e) {
-  e.stopPropagation();
-  const shown = nav.style.display === "flex";
-  nav.style.display = shown ? "none" : "flex";
-  btn.setAttribute("aria-expanded", !shown);
-};
-document.addEventListener('click', function(e) {
-  if (!btn.contains(e.target) && !nav.contains(e.target) && window.innerWidth<700) {
-    nav.style.display = "none";
-    btn.setAttribute("aria-expanded", false);
-  }
-});
-window.addEventListener('resize', function() {
-  if(window.innerWidth>=700){
-    nav.style.display = "flex";
-    btn.setAttribute("aria-expanded", true);
-  } else {
-    nav.style.display = "none";
-    btn.setAttribute("aria-expanded", false);
-  }
-});
-</script>
-  </header>
-  <!-- ...Mevcut kodların başı... -->
-<main>
-  <!-- Eski içeriklerin üstünde/fransızca olarak -->
-  <section id="reseau-electricite" style="margin-bottom:48px;">
-    <h2>Électricité en France</h2>
-    <p>
-      Découvrez toutes les entreprises françaises du secteur de l’électricité. Cliquez sur une entreprise pour voir ses détails, son activité, et ses coordonnées officielles extraites de l’INPI.
-    </p>
-    <div id="webgl-electric-network" style="width:100%;height:400px;margin:24px 0 40px 0;border-radius:18px;overflow:hidden;box-shadow:0 4px 32px #0071e31c;"></div>
-    <div>
-      <input type="text" id="electricite-search" placeholder="Rechercher une entreprise..." style="padding:12px 18px;font-size:1.08em;border-radius:11px;border:1px solid #d3d7de;width:350px;max-width:90%;margin-bottom:18px;">
+    <style>
+      .menu-btn {
+        background: none;
+        border: none;
+        font-size: 2em;
+        padding: 8px 14px;
+        cursor: pointer;
+        color: #2d3a4e;
+        display: flex;
+        align-items: center;
+      }
+      .menu-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 52px;
+        right: 16px;
+        min-width: 170px;
+        background: #f6f7fa;
+        box-shadow: 0 4px 18px #0001;
+        border-radius: 14px;
+        z-index: 100;
+        padding: 10px 0;
+      }
+      .menu-nav a {
+        color: #2d3a4e;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 12px 24px;
+        display: block;
+        border-radius: 8px;
+        transition: background 0.16s;
+      }
+      .menu-nav a:hover {
+        background: #e6eefb;
+        color: #1976d2;
+      }
+      @media (min-width: 700px) {
+        .menu-btn { display: none; }
+        .menu-nav {
+          display: flex !important;
+          flex-direction: row;
+          position: static;
+          box-shadow: none;
+          background: none;
+          border-radius: 0;
+          padding: 0;
+          min-width: 0;
+        }
+        .menu-nav a { padding: 0 18px; }
+      }
+    </style>
+    <div style="position:relative;">
+      <button class="menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+        ☰ Menu
+      </button>
+      <nav class="menu-nav" id="main-menu">
+        <a href="services.html">Services</a>
+        <a href="apropos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
-    <div id="electricite-list" style="margin:0 auto;max-width:920px;"></div>
-    <div id="electricite-details" style="display:none;margin:24px auto 0 auto;max-width:670px;" class="electricite-details-box"></div>
-  </section>
-  <!-- ...Mevcut kodlarının geri kalanı... -->
-</main>
-<!-- ... -->
-<!-- Sayfanın sonunda, </body> öncesi: Three.js, animasyon ve şirket API kodları -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="webgl-electricite.js"></script>
-<script src="api-electricite.js"></script>
+    <script>
+      const btn = document.getElementById('menu-toggle');
+      const nav = document.getElementById('main-menu');
+      btn.onclick = function(e) {
+        e.stopPropagation();
+        const shown = nav.style.display === "flex";
+        nav.style.display = shown ? "none" : "flex";
+        btn.setAttribute("aria-expanded", !shown);
+      };
+      document.addEventListener('click', function(e) {
+        if (!btn.contains(e.target) && !nav.contains(e.target) && window.innerWidth<700) {
+          nav.style.display = "none";
+          btn.setAttribute("aria-expanded", false);
+        }
+      });
+      window.addEventListener('resize', function() {
+        if(window.innerWidth>=700){
+          nav.style.display = "flex";
+          btn.setAttribute("aria-expanded", true);
+        } else {
+          nav.style.display = "none";
+          btn.setAttribute("aria-expanded", false);
+        }
+      });
+    </script>
+  </header>
+  <main>
+    <section id="reseau-electricite" style="margin-bottom:48px;">
+      <h2>Électricité en France</h2>
+      <p>
+        Découvrez toutes les entreprises françaises du secteur de l’électricité. Cliquez sur une entreprise pour voir ses détails, son activité, et ses coordonnées officielles extraites de l’INPI.
+      </p>
+      <div id="webgl-electric-network" style="width:100%;height:400px;margin:24px 0 40px 0;border-radius:18px;overflow:hidden;box-shadow:0 4px 32px #0071e31c;"></div>
+      <div>
+        <input type="text" id="electricite-search" placeholder="Rechercher une entreprise..." style="padding:12px 18px;font-size:1.08em;border-radius:11px;border:1px solid #d3d7de;width:350px;max-width:90%;margin-bottom:18px;">
+      </div>
+      <div id="electricite-list" style="margin:0 auto;max-width:920px;"></div>
+      <div id="electricite-details" style="display:none;margin:24px auto 0 auto;max-width:670px;" class="electricite-details-box"></div>
+    </section>
+  </main>
   <main>
     <h2>Bienvenue</h2>
     <p>Arrière-plan animé ultra-réaliste selon la météo actuelle !</p>
@@ -139,6 +128,9 @@ window.addEventListener('resize', function() {
     © 2025 Synapsion Energie Group — Tous droits réservés.
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="webgl-electricite.js"></script>
+  <script src="api-electricite.js"></script>
   <script src="weather-background.js"></script>
   <script src="theme-toggle.js"></script>
 </body>
