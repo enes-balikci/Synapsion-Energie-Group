@@ -19,8 +19,7 @@
 <body>
   <canvas id="weather-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
   <header>
-    <div class="title">Synapsion Energie Group</div
-<!-- Hamburger Menü Butonu ve Açılır Menü -->
+  <!-- Hamburger Menü Butonu ve Açılır Menü -->
 <style>
 .menu-btn {
   background: none;
@@ -100,43 +99,6 @@ document.addEventListener('click', function(e) {
 });
 window.addEventListener('resize', function() {
   if(window.innerWidth>=700){
-    nav.style.display = "flex";
-    btn.setAttribute("aria-expanded", true);
-  } else {
-    nav.style.display = "none";
-    btn.setAttribute("aria-expanded", false);
-  }
-});
-</script>
-</div>
-<!-- Hesap Giriş Modalı -->
-<div id="account-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0006;z-index:111;align-items:center;justify-content:center;">
-  <form id="login-form" style="background:#fff;padding:32px 28px;border-radius:16px;max-width:340px;width:94vw;box-shadow:0 8px 48px #0002;text-align:center;">
-    <h2 style="margin-bottom:16px;">Connexion</h2>
-    <input type="text" id="username" placeholder="Nom d'utilisateur" required style="width:90%;margin-bottom:12px;padding:10px;border-radius:8px;border:1px solid #ddd;">
-    <input type="password" id="password" placeholder="Mot de passe" required style="width:90%;margin-bottom:18px;padding:10px;border-radius:8px;border:1px solid #ddd;">
-    <button type="submit" style="width:100%;padding:12px;background:#1976d2;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Se connecter</button>
-    <div id="login-message" style="color:#d32f2f;margin-top:12px;font-size:0.99em;"></div>
-    <button type="button" id="close-modal" style="margin-top:14px;background:none;border:none;color:#1976d2;font-size:1.1em;cursor:pointer;">Fermer</button>
-  </form>
-</div>
-<script>
-const btn = document.getElementById('menu-toggle');
-const nav = document.getElementById('main-menu');
-btn.onclick = function() {
-  const shown = nav.style.display === "flex";
-  nav.style.display = shown ? "none" : "flex";
-  btn.setAttribute("aria-expanded", !shown);
-};
-// Menü dışında tıklanınca kapat
-document.addEventListener('click', function(e) {
-  if (!btn.contains(e.target) && !nav.contains(e.target) && window.innerWidth<750) {
-    nav.style.display = "none";
-    btn.setAttribute("aria-expanded", false);
-  }
-});
-window.addEventListener('resize', function() {
-  if(window.innerWidth>=750){
     nav.style.display = "flex";
     btn.setAttribute("aria-expanded", true);
   } else {
