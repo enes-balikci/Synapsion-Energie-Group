@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <title>Accueil | Synapsion Energie Group</title>
+  <title>Anasayfa | Synapsion Energie Group</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <canvas id="weather-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
   <header>
     <div class="title">Synapsion Energie Group</div>
     <nav>
-      <a href="index.html" class="active">Accueil</a>
-      <a href="services.html">Services</a>
-      <a href="apropos.html">À propos</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" class="active">Anasayfa</a>
+      <a href="services.html">Hizmetler</a>
+      <a href="apropos.html">Hakkımızda</a>
+      <a href="contact.html">İletişim</a>
     </nav>
   </header>
   <main>
-    <h2>Bienvenue sur notre site</h2>
-    <p>Synapsion Energie Group est un fournisseur innovant et durable d’électricité basé en France.<br>
-    Nous offrons des solutions adaptées à vos besoins en énergie, avec engagement et transparence.</p>
+    <h2>Hoşgeldiniz</h2>
+    <p>Güncel hava durumuna göre ultra gerçekçi animasyonlu arka plan ile!</p>
   </main>
   <footer>
-    © 2025 Synapsion Energie Group — Tous droits réservés.
+    © 2025 Synapsion Energie Group — Her hakkı saklıdır.
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script src="weather-background.js"></script>
   <script src="theme-toggle.js"></script>
 </body>
 </html>
