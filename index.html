@@ -20,14 +20,94 @@
   <canvas id="weather-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
   <header>
     <div class="title">Synapsion Energie Group</div
+<!-- Hamburger Menü Butonu ve Açılır Menü -->
+<style>
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 2em;
+  padding: 8px 14px;
+  cursor: pointer;
+  color: #2d3a4e;
+  display: flex;
+  align-items: center;
+}
+.menu-nav {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 52px;
+  right: 16px;
+  min-width: 170px;
+  background: #f6f7fa;
+  box-shadow: 0 4px 18px #0001;
+  border-radius: 14px;
+  z-index: 100;
+  padding: 10px 0;
+}
+.menu-nav a {
+  color: #2d3a4e;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 12px 24px;
+  display: block;
+  border-radius: 8px;
+  transition: background 0.16s;
+}
+.menu-nav a:hover {
+  background: #e6eefb;
+  color: #1976d2;
+}
+@media (min-width: 700px) {
+  .menu-btn { display: none; }
+  .menu-nav {
+    display: flex !important;
+    flex-direction: row;
+    position: static;
+    box-shadow: none;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  .menu-nav a { padding: 0 18px; }
+}
+</style>
 <div style="position:relative;">
- <nav style="width:100%;background:#f6f7fa;border-bottom:1px solid #e0e3ea;padding:0;">
-  <ul style="list-style:none;display:flex;gap:32px;margin:0;padding:0 32px;height:56px;align-items:center;">
-    <li><a href="services.html" style="color:#2d3a4e;font-weight:500;text-decoration:none;">Services</a></li>
-    <li><a href="apropos.html" style="color:#2d3a4e;font-weight:500;text-decoration:none;">À propos</a></li>
-    <li><a href="contact.html" style="color:#2d3a4e;font-weight:500;text-decoration:none;">Contact</a></li>
-  </ul>
-</nav>
+  <button class="menu-btn" id="menu-toggle" aria-label="Menu" aria-expanded="false">
+    ☰ Menu
+  </button>
+  <nav class="menu-nav" id="main-menu">
+    <a href="services.html">Services</a>
+    <a href="apropos.html">À propos</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</div>
+<script>
+const btn = document.getElementById('menu-toggle');
+const nav = document.getElementById('main-menu');
+btn.onclick = function(e) {
+  e.stopPropagation();
+  const shown = nav.style.display === "flex";
+  nav.style.display = shown ? "none" : "flex";
+  btn.setAttribute("aria-expanded", !shown);
+};
+document.addEventListener('click', function(e) {
+  if (!btn.contains(e.target) && !nav.contains(e.target) && window.innerWidth<700) {
+    nav.style.display = "none";
+    btn.setAttribute("aria-expanded", false);
+  }
+});
+window.addEventListener('resize', function() {
+  if(window.innerWidth>=700){
+    nav.style.display = "flex";
+    btn.setAttribute("aria-expanded", true);
+  } else {
+    nav.style.display = "none";
+    btn.setAttribute("aria-expanded", false);
+  }
+});
+</script>
 </div>
 <!-- Hesap Giriş Modalı -->
 <div id="account-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0006;z-index:111;align-items:center;justify-content:center;">
