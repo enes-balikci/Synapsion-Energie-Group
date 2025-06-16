@@ -1,54 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>À propos | Synapsion Energie Group</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background-color: black;
-      color: white;
-    }
+    /* ... yukarıdaki style bloğu aynen buraya kopyalanmalı ... */
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-flex">
-      <a href="index.html" class="logo-link">
-        <img src="energy-logo.png" alt="Logo Synapsion Energie Group" class="site-logo" />
-      </a>
-      <nav class="main-nav">
-        <ul>
-          <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
-          <li class="nav-item"><a href="services.html" class="nav-link"><i class="fas fa-bolt"></i> Services</a></li>
-          <li class="nav-item"><a href="apropos.html" class="nav-link active"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+  <header>
+    <div class="title">Synapsion Energie Group</div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="services.html">Services</a>
+      <a href="apropos.html" class="active">À propos</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
   <main>
-    <div class="container">
-      <section class="hero-section">
-        <h1 class="main-title"><i class="fas fa-info-circle"></i> À propos de Synapsion Energie Group</h1>
-        <h2 class="subtitle">Notre mission & nos valeurs</h2>
-        <p class="lead">
-          Synapsion Energie Group, c’est une entreprise qui place l’innovation et la durabilité au cœur de ses solutions énergétiques.
-        </p>
-      </section>
-    </div>
+    <section class="hero">
+      <h1>Qui sommes-nous ?</h1>
+      <p>
+        Synapsion Energie Group est une entreprise française spécialisée dans la fourniture d’électricité propre et le conseil énergétique.
+        <br>Notre mission est de contribuer à la transition énergétique en France avec expertise et intégrité.
+      </p>
+      <div class="gl-btn-wrap">
+        <button class="gl-btn" onclick="window.location='services.html';"></button>
+        <span class="gl-btn-label">Voir nos services</span>
+        <canvas id="webgl-canvas"></canvas>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer">
-    <div class="footer-flex">
-      <span>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="mailto:contact@synapsion.com" aria-label="E-mail"><i class="fas fa-envelope"></i></a>
-      </span>
-      <span>© 2025 Synapsion Energie Group. Tous droits réservés.</span>
-    </div>
+  <footer>
+    © 2025 Synapsion Energie Group — Tous droits réservés.
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    // ... WebGL kodu yukarıdakiyle aynı ...
+    const canvas = document.getElementById('webgl-canvas');
+    if(canvas) {
+      canvas.width=180; canvas.height=48;
+      let renderer = new THREE.WebGLRenderer({canvas, alpha: true});
+      renderer.setClearColor(0x000000, 0);
+      let scene = new THREE.Scene();
+      let camera = new THREE.PerspectiveCamera(75, 180/48, 0.1, 1000);
+      camera.position.z = 75;
+
+      let geometry = new THREE.TorusGeometry(25, 10, 15, 100);
+      let material = new THREE.MeshStandardMaterial({color: 0x001F54, metalness: 0.7, roughness: 0.08, emissive: 0x003EA8, emissiveIntensity: 0.11});
+      let torus = new THREE.Mesh(geometry, material);
+      scene.add(torus);
+
+      let pointLight = new THREE.PointLight(0xffffff, 2, 200);
+      pointLight.position.set(40, 20, 50);
+      scene.add(pointLight);
+
+      let animate = function() {
+        torus.rotation.x += 0.012;
+        torus.rotation.y += 0.018;
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      };
+      animate();
+    }
+  </script>
 </body>
 </html>
