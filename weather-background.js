@@ -1,5 +1,5 @@
 // weather-background.js
-// Tüm sayfalarda otomatik hava durumuna göre ultra yüksek çözünürlüklü WebGL animasyon
+// Tüm sayfalarda otomatik hava durumuna göre ultra yüksek çözünürlüklü ve hafif bulanık WebGL animasyon
 (async function() {
   // Kullanıcıdan konum al
   function getCoords() {
@@ -21,9 +21,29 @@
   // WebGL animasyonu başlat
   function animateWeather(code) {
     const canvas = document.getElementById('weather-bg');
-    const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, preserveDrawingBuffer:true});
-    renderer.setPixelRatio(window.devicePixelRatio || 1);
+    // Yüksek çözünürlük ve antialias için ayarlar
+    const pixelRatio = Math.max(window.devicePixelRatio || 1, 2); // Retina ve üstü için 2 veya daha fazla
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      preserveDrawingBuffer: true
+    });
+    renderer.setPixelRatio(pixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight, false);
+
+    // Hafif bulanıklık efekti için: post-processing kullan
+    // THREE.js postprocessing modülü (EffectComposer+Bloom)
+    let composer, renderScene, bloomPass, blurPass;
+    try {
+      // Eğer postprocessing modülleri yüklüyse kullan
+      // (CDN ekle: https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/postprocessing/EffectComposer.min.js ...)
+      // Ama burada vanilla JS ile hafif blur için basit workaround:
+      canvas.style.filter = 'blur(2.1px) brightness(1.09) saturate(1.08)'; // Hafif bulanıklaştırma ve parlaklık için CSS filter
+    } catch(e) {
+      // fallback: sadece filter
+      canvas.style.filter = 'blur(2.1px) brightness(1.09) saturate(1.08)';
+    }
 
     let scene = new THREE.Scene();
     let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 2000);
@@ -32,10 +52,10 @@
     function resizeRenderer() {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
+      canvas.width = width * pixelRatio;
+      canvas.height = height * pixelRatio;
       renderer.setSize(width, height, false);
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(pixelRatio);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
     }
@@ -58,7 +78,7 @@
       }
       geometry.setAttribute('position', new THREE.BufferAttribute(positions,3));
       geometry.setAttribute('color', new THREE.BufferAttribute(colors,3));
-      let mat = new THREE.PointsMaterial({vertexColors:true, size:10, opacity:0.43, transparent:true});
+      let mat = new THREE.PointsMaterial({vertexColors:true, size:10, opacity:0.43, transparent:true, sizeAttenuation:true});
       let pts = new THREE.Points(geometry,mat);
       scene.add(pts);
       let sun = new THREE.PointLight(0xffe066,3,2000);
@@ -87,7 +107,7 @@
       }
       geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
       geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
-      let mat = new THREE.PointsMaterial({vertexColors:true, size:26, opacity:0.18, transparent:true});
+      let mat = new THREE.PointsMaterial({vertexColors:true, size:26, opacity:0.18, transparent:true, sizeAttenuation:true});
       let pts = new THREE.Points(geometry,mat);
       scene.add(pts);
       function anim(){
@@ -184,7 +204,7 @@
       }
       geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
       geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
-      let mat = new THREE.PointsMaterial({vertexColors:true, size:18, opacity:0.22, transparent:true});
+      let mat = new THREE.PointsMaterial({vertexColors:true, size:18, opacity:0.22, transparent:true, sizeAttenuation:true});
       let pts = new THREE.Points(geometry,mat);
       scene.add(pts);
       function anim(){
