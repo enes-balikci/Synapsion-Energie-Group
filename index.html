@@ -1,238 +1,256 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Synapsion Energie Group</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accueil | Synapsion Energie Group</title>
   <style>
     :root {
-      --primary: #009688;
-      --secondary: #212121;
-      --accent: #fff176;
-      --text: #f5f5f5;
-      --background: #181818;
-      --header-height: 80px;
-      --footer-height: 60px;
-      --container-max: 1100px;
-      --border-radius: 16px;
-      --transition: 0.3s cubic-bezier(.4,0,.2,1);
+      --bg: #000;
+      --header: #001F54;
+      --text: #fff;
+      --radius: 20px;
+      --transition: 0.5s cubic-bezier(.68,-0.55,.27,1.55);
     }
     html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
-      font-family: "Segoe UI", "Roboto", sans-serif;
-      background: var(--background);
+      background: var(--bg);
       color: var(--text);
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      font-size: 18px;
       min-height: 100vh;
+      overflow-x: hidden;
     }
-    .container {
-      width: 90%;
-      max-width: var(--container-max);
-      margin: 0 auto;
-      padding: 24px 0;
+    header {
+      background: var(--bg);
+      padding: 24px 0 0 0;
+      text-align: center;
     }
-    .site-header {
-      background: var(--secondary);
-      height: var(--header-height);
-      box-shadow: 0 4px 12px #0004;
-      display: flex;
-      align-items: center;
-    }
-    .header-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: var(--header-height);
-    }
-    .logo-link {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-    .site-logo {
-      height: 48px;
-      width: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #fff;
-      box-shadow: 0 2px 6px #0002;
-    }
-    .main-nav ul {
-      display: flex;
-      gap: 28px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      align-items: center;
-    }
-    .nav-link {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 1.12em;
-      font-weight: 500;
-      position: relative;
+    .title {
+      color: var(--header);
+      font-size: 2.6em;
+      letter-spacing: 2px;
+      font-weight: bold;
+      margin-bottom: 0.2em;
+      text-shadow: 0 4px 10px #001F5477;
       transition: color var(--transition);
+      animation: title-appear 1.2s cubic-bezier(.68,-0.55,.27,1.55);
     }
-    .nav-link.active,
-    .nav-link:hover {
-      color: var(--primary);
+    @keyframes title-appear {
+      from {opacity: 0; transform: translateY(-40px);}
+      to {opacity: 1; transform: translateY(0);}
     }
-    .nav-link.active::after,
-    .nav-link:hover::after {
-      content: '';
-      display: block;
-      margin: 0 auto;
-      width: 60%;
-      border-bottom: 2.5px solid var(--primary);
-      margin-top: 3px;
+    nav {
+      margin: 32px 0 0 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      animation: nav-fade 1.4s 0.4s backwards;
+    }
+    @keyframes nav-fade {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      padding: 10px 34px;
+      border-radius: var(--radius);
+      font-size: 1.1em;
+      background: linear-gradient(90deg, #001F54 0%, #000c3f 100%);
+      box-shadow: 0 4px 14px #001F5444, 0 1.5px 0 #fff2 inset;
+      margin: 0 2px;
+      transition: background 0.5s, color 0.35s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+      outline: none;
+      border: none;
+    }
+    nav a.active,
+    nav a:focus,
+    nav a:hover {
+      color: #ffd700;
+      background: linear-gradient(90deg, #003EA8 0%, #001F54 100%);
+      transform: scale(1.07);
+      box-shadow: 0 8px 24px #003EA877;
     }
     main {
-      min-height: calc(100vh - var(--header-height) - var(--footer-height));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .hero-section {
-      background: linear-gradient(130deg, #1d242c 60%, #00968816 100%);
-      padding: 48px 32px;
-      border-radius: var(--border-radius);
-      box-shadow: 0 8px 40px #0006;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
-      max-width: 480px;
-      width: 100%;
-    }
-    .main-title {
-      font-size: 2.6em;
-      margin: 0 0 10px 0;
-      font-weight: bold;
-      color: var(--primary);
-      letter-spacing: 1px;
-      text-align: center;
-    }
-    .subtitle {
-      font-size: 1.35em;
-      color: var(--accent);
-      margin: 0 0 12px 0;
-      text-align: center;
-    }
-    .lead {
-      font-size: 1.13em;
-      color: #e0e0e0;
-      margin-bottom: 16px;
-      text-align: center;
-      line-height: 1.5;
-    }
-    .primary-btn {
-      padding: 12px 32px;
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      border-radius: 100px;
-      font-size: 1.09em;
-      font-weight: 600;
-      box-shadow: 0 2px 16px #00968844;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: background var(--transition), transform var(--transition);
-    }
-    .primary-btn:hover {
-      background: #00796b;
-      transform: translateY(-3px) scale(1.03);
-    }
-    .site-footer {
-      background: var(--secondary);
-      height: var(--footer-height);
-      display: flex;
-      align-items: center;
+      min-height: 60vh;
       justify-content: center;
-      box-shadow: 0 -2px 12px #0003;
-      margin-top: 36px;
+      margin: 0;
+      padding: 0;
+      animation: main-fade 1.6s 0.6s backwards;
     }
-    .footer-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 90%;
-      max-width: var(--container-max);
-      gap: 16px;
+    @keyframes main-fade {
+      from {opacity:0; transform: translateY(40px);}
+      to {opacity:1; transform: translateY(0);}
     }
-    .footer-flex span {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      font-size: 1.08em;
+    .hero {
+      margin-top: 60px;
+      max-width: 600px;
+      background: rgba(0,31,84,0.09);
+      padding: 38px 32px;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 40px #001F5433;
+      text-align: center;
+      overflow: hidden;
+      animation: hero-glow 2s infinite alternate ease-in-out;
     }
-    .footer-flex a {
-      color: var(--accent);
-      font-size: 1.19em;
-      margin-right: 3px;
+    @keyframes hero-glow {
+      0% { box-shadow: 0 8px 40px #001F5422; }
+      100% { box-shadow: 0 8px 70px #003EA855; }
+    }
+    .hero h1 {
+      color: var(--header);
+      margin: 0 0 10px 0;
+      font-size: 2em;
+      letter-spacing: 1px;
+      font-weight: bold;
       transition: color var(--transition);
-      text-decoration: none;
     }
-    .footer-flex a:hover {
-      color: var(--primary);
+    .hero p {
+      color: var(--text);
+      font-size: 1.1em;
+      margin: 0 0 24px 0;
+      line-height: 1.7;
+      text-shadow: 0 1px 10px #000c;
+      animation: fadein 1.2s 1.0s backwards;
     }
-    /* Responsive Design */
-    @media (max-width: 900px) {
-      .header-flex, .footer-flex { flex-direction: column; height: auto; gap: 8px; }
-      .main-nav ul { gap: 16px; }
-      .site-logo { height: 40px; width: 40px; }
-      .hero-section { padding: 32px 10px; }
+    @keyframes fadein {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
-    @media (max-width: 600px) {
-      .container { width: 98%; padding: 12px 0; }
-      .main-title { font-size: 2em; }
-      .subtitle { font-size: 1.08em; }
-      .hero-section { max-width: 100%; padding: 18px 2px; }
-      .footer-flex { flex-direction: column; }
+    .gl-btn {
+      display: inline-block;
+      width: 180px;
+      height: 48px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      margin-top: 36px;
+      outline: none;
+    }
+    #webgl-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 12px;
+      background: none;
+      pointer-events: none;
+      position: absolute;
+      left: 0; top: 0;
+    }
+    .gl-btn-wrap {
+      position: relative;
+      display: inline-block;
+      width: 180px;
+      height: 48px;
+      border-radius: 12px;
+      overflow: visible;
+      margin-bottom: 10px;
+    }
+    .gl-btn-label {
+      position: absolute;
+      left: 0; right: 0; top: 0; bottom: 0;
+      text-align: center;
+      line-height: 48px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.08em;
+      letter-spacing: 0.5px;
+      z-index: 2;
+      pointer-events: none;
+      text-shadow: 0 3px 16px #001F54bb;
+      transition: color 0.4s;
+    }
+    .gl-btn:active ~ .gl-btn-label {
+      color: #ffd700;
+    }
+    footer {
+      width: 100%;
+      min-height: 70px;
+      color: #888;
+      background: #000;
+      text-align: center;
+      padding: 40px 0 16px 0;
+      font-size: 1em;
+      letter-spacing: 1.2px;
+      border-top: 1.5px solid #001F54;
+      margin-top: 80px;
+      animation: fadein 2s 1.2s backwards;
+    }
+    @media (max-width: 767px) {
+      nav { gap: 17px; }
+      .title { font-size: 2em; }
+      .hero { padding: 24px 7px; margin-top: 32px; }
+      .gl-btn-wrap, .gl-btn { width: 96vw; max-width: 200px;}
     }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-flex">
-      <a href="index.html" class="logo-link">
-        <img src="https://www.pngitem.com/pimgs/m/248-2482359_belgium-flanders-hand-waving-flag-png-download-lion.png" alt="Flanders Aslanı Logo" class="site-logo" />
-      </a>
-      <nav class="main-nav">
-        <ul>
-          <li class="nav-item"><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Accueil</a></li>
-          <li class="nav-item"><a href="services.html" class="nav-link"><i class="fas fa-bolt"></i> Services</a></li>
-          <li class="nav-item"><a href="apropos.html" class="nav-link"><i class="fas fa-info-circle"></i> À propos</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+  <header>
+    <div class="title">Synapsion Energie Group</div>
+    <nav>
+      <a href="index.html" class="active">Accueil</a>
+      <a href="services.html">Services</a>
+      <a href="apropos.html">À propos</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
   <main>
-    <div class="container">
-      <section class="hero-section">
-        <h1 class="main-title"><i class="fas fa-bolt"></i> Synapsion Energie Group</h1>
-        <h2 class="subtitle">Votre énergie, notre mission</h2>
-        <p class="lead">
-          Fournisseur d’énergie innovant et durable avec des solutions adaptées à vos besoins.
-        </p>
-        <a href="contact.html" class="primary-btn"><i class="fas fa-paper-plane"></i> Nous contacter</a>
-      </section>
-    </div>
+    <section class="hero">
+      <h1>Votre énergie, notre mission</h1>
+      <p>
+        Synapsion Energie Group est un fournisseur innovant et durable d’électricité basé en France.<br>
+        Nous offrons des solutions adaptées à vos besoins en énergie, avec engagement et transparence.
+      </p>
+      <div class="gl-btn-wrap">
+        <button class="gl-btn" onclick="window.location='contact.html';"></button>
+        <span class="gl-btn-label">Nous contacter</span>
+        <canvas id="webgl-canvas"></canvas>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer">
-    <div class="footer-flex">
-      <span>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="mailto:contact@synapsion.com" aria-label="E-mail"><i class="fas fa-envelope"></i></a>
-      </span>
-      <span>© 2025 Synapsion Energie Group. Tous droits réservés.</span>
-    </div>
+  <footer>
+    © 2025 Synapsion Energie Group — Tous droits réservés.
   </footer>
+  <!-- Three.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+  // WebGL button background effect
+  const canvas = document.getElementById('webgl-canvas');
+  if(canvas) {
+    canvas.width=180; canvas.height=48;
+    let renderer = new THREE.WebGLRenderer({canvas, alpha: true});
+    renderer.setClearColor(0x000000, 0);
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75, 180/48, 0.1, 1000);
+    camera.position.z = 75;
+
+    let geometry = new THREE.TorusGeometry(25, 10, 15, 100);
+    let material = new THREE.MeshStandardMaterial({color: 0x001F54, metalness: 0.7, roughness: 0.08, emissive: 0x003EA8, emissiveIntensity: 0.11});
+    let torus = new THREE.Mesh(geometry, material);
+    scene.add(torus);
+
+    let pointLight = new THREE.PointLight(0xffffff, 2, 200);
+    pointLight.position.set(40, 20, 50);
+    scene.add(pointLight);
+
+    let animate = function() {
+      torus.rotation.x += 0.012;
+      torus.rotation.y += 0.018;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    };
+    animate();
+  }
+  </script>
 </body>
 </html>
